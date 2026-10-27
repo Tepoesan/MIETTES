@@ -1,0 +1,15 @@
+# Secrets et variables locales
+.env
+.env.*
+!.env.example
+
+# Fichiers temporaires
+*.log
+
+# Dépendances
+node_modules/
+vendor/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
