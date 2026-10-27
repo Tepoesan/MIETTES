@@ -24,6 +24,7 @@ services:
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
     volumes:
       - wordpress_data:/var/www/html
+      - ./themes/miettes:/var/www/html/wp-content/themes/miettes
 
 volumes:
   db_data:
