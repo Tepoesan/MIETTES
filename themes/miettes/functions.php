@@ -2,13 +2,22 @@
 <?php
 /**
  * ==========================================================
- * MIETTES — Fonctions du thème WordPress
+ * MIETTES — FONCTIONS DU THÈME WORDPRESS
  * ==========================================================
  *
- * Ce fichier permet notamment de charger :
+ * Ce fichier permet de charger :
  *
- * 1. La feuille de style principale (style.css).
- * 2. Le JavaScript du carrousel (collection-scroll.js).
+ * 01 — style.css
+ *      Feuille de style principale du site.
+ *
+ * 02 — collection-scroll.js
+ *      Carrousel cinématique des créations.
+ *
+ * 03 — manifesto-scroll.js
+ *      Animation éditoriale du manifeste.
+ *
+ * Chaque animation possède son propre fichier JS
+ * pour faciliter la maintenance du thème.
  *
  * L'ancien script ghost-logo.js n'est plus utilisé.
  */
@@ -21,49 +30,49 @@
 /**
  * Charge les fichiers nécessaires au fonctionnement
  * et à l'apparence du thème MIETTES.
+ *
+ * Cette fonction est appelée automatiquement
+ * par WordPress grâce au hook wp_enqueue_scripts.
  */
 function miettes_enqueue_assets() {
 
     /* ------------------------------------------------------
-       1. FEUILLE DE STYLE PRINCIPALE
+       01 — FEUILLE DE STYLE PRINCIPALE
        ------------------------------------------------------
-
-       wp_enqueue_style() demande à WordPress
-       de charger notre fichier style.css.
+       
+       wp_enqueue_style() charge notre style.css.
 
        get_stylesheet_uri() récupère son URL.
 
        filemtime() utilise la date de modification
        du fichier comme numéro de version pour
-       éviter de conserver une ancienne version
-       du CSS dans le cache du navigateur.
+       éviter les problèmes de cache.
     */
 
     wp_enqueue_style(
         'miettes-style',
         get_stylesheet_uri(),
         array(),
-        filemtime(get_stylesheet_directory() . '/style.css')
+        filemtime(
+            get_stylesheet_directory() . '/style.css'
+        )
     );
 
 
     /* ------------------------------------------------------
-       2. JAVASCRIPT — COLLECTION HORIZONTALE
+       02 — JAVASCRIPT : COLLECTION CINÉMATIQUE
        ------------------------------------------------------
 
-       wp_enqueue_script() demande à WordPress
-       de charger notre animation personnalisée.
+       Anime les trois créations gastronomiques
+       pendant le défilement vertical.
 
-       get_template_directory_uri() récupère
-       l'URL du dossier de notre thème.
+       Le script contrôle :
+       - la position des photographies ;
+       - leur taille ;
+       - leur opacité ;
+       - leur superposition.
 
-       array() indique que ce script ne dépend
-       d'aucune bibliothèque externe.
-
-       filemtime() évite les problèmes de cache.
-
-       true demande le chargement en bas de page,
-       avant la fermeture de la balise body.
+       Le scroll naturel du navigateur est conservé.
     */
 
     wp_enqueue_script(
@@ -76,6 +85,39 @@ function miettes_enqueue_assets() {
         true
     );
 
+
+    /* ------------------------------------------------------
+       03 — JAVASCRIPT : LE MANIFESTE
+       ------------------------------------------------------
+
+       Anime la section éditoriale située
+       après notre collection gastronomique.
+
+       Deux tableaux se succèdent progressivement :
+
+       01 — La libre communication des pensées
+            et des opinions...
+
+       02 — Valeurs. Traditions.
+            Le goût de l'essentiel.
+
+       Le script utilise le scroll vertical
+       pour gérer les transitions douces.
+
+       Il fonctionne indépendamment
+       du carrousel gastronomique.
+    */
+
+    wp_enqueue_script(
+        'miettes-manifesto-scroll',
+        get_template_directory_uri() . '/js/manifesto-scroll.js',
+        array(),
+        filemtime(
+            get_template_directory() . '/js/manifesto-scroll.js'
+        ),
+        true
+    );
+
 }
 
 
@@ -84,10 +126,13 @@ function miettes_enqueue_assets() {
    ==========================================================
 
    Le hook wp_enqueue_scripts indique à WordPress
-   quand exécuter notre fonction.
+   à quel moment charger nos ressources.
 
-   Il charge ainsi automatiquement le CSS
-   et le JavaScript sur les pages du site.
+   Les fichiers sont automatiquement ajoutés
+   aux pages du site utilisant le thème MIETTES.
 */
 
-add_action('wp_enqueue_scripts', 'miettes_enqueue_assets');
+add_action(
+    'wp_enqueue_scripts',
+    'miettes_enqueue_assets'
+);

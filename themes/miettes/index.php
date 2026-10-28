@@ -2,23 +2,28 @@
 <?php
 /**
  * ==========================================================
- * MIETTES — Template principal du thème
+ * MIETTES — TEMPLATE PRINCIPAL DU THÈME
  * ==========================================================
  *
- * Organisation de la page :
+ * Organisation :
  *
  * 01 — HERO
  *      Présentation de la maison MIETTES.
  *
  * 02 — LA COLLECTION
- *      Galerie horizontale pilotée par le scroll.
+ *      Carrousel cinématique piloté par le scroll.
+ *      Les créations avancent progressivement
+ *      au premier plan.
  *
- * Le CSS gère l'apparence et le positionnement.
- * Le JavaScript synchronise le déplacement
- * horizontal avec le défilement vertical.
+ * 03 — SIGNATURE MIETTES
+ *      Grande image de marque en pleine largeur,
+ *      indépendante du carrousel.
+ *
+ * Le CSS gère l'apparence.
+ * Le JavaScript anime uniquement la collection.
  */
 
-// Charge l'en-tête du site.
+// Charge l'en-tête WordPress.
 get_header();
 ?>
 
@@ -45,7 +50,7 @@ get_header();
 
         </div>
 
-        <!-- Photographie principale -->
+        <!-- Photographie principale en pleine largeur -->
         <div class="hero-visual">
 
             <img
@@ -64,7 +69,7 @@ get_header();
 
         </div>
 
-        <!-- Bas du hero -->
+        <!-- Informations sous la photographie -->
         <div class="hero-bottom">
 
             <span>01 / LA PIÈCE SIGNATURE</span>
@@ -83,16 +88,14 @@ get_header();
          SECTION 02 — LA COLLECTION
          =====================================================
 
-         Fonctionnement attendu :
+         Le scroll vertical pilote les transitions
+         entre les trois créations.
 
-         1. L'utilisateur descend jusqu'à la collection.
-         2. La collection reste visible à l'écran.
-         3. Le scroll vertical fait avancer les créations
-            horizontalement, de droite vers la gauche.
-         4. Le mouvement s'arrête à la dernière création.
-         5. La page reprend son défilement vertical.
+         Le conteneur sticky maintient la collection
+         visible pendant l'animation.
 
-         En remontant, le mouvement s'inverse.
+         Les photographies sont superposées
+         pour créer un effet de profondeur.
     -->
 
     <section
@@ -101,25 +104,10 @@ get_header();
         aria-labelledby="collection-title"
     >
 
-        <!--
-            CONTENEUR STICKY
-
-            Englobe le titre ET les créations.
-
-            CSS :
-            position: sticky
-
-            JavaScript :
-            calcule la hauteur et la position nécessaires
-            pour maintenir cette zone visible.
-        -->
+        <!-- Zone maintenue à l'écran pendant le scroll -->
         <div class="collection-sticky">
 
-
-            <!-- =============================================
-                 INTRODUCTION DE LA COLLECTION
-                 ============================================= -->
-
+            <!-- Introduction de la collection -->
             <div class="collection-intro">
 
                 <span class="collection-eyebrow">
@@ -138,46 +126,50 @@ get_header();
 
 
             <!-- =============================================
-                 GALERIE HORIZONTALE
+                 CARROUSEL CINÉMATIQUE
                  =============================================
 
                  collection-viewport :
-                 fenêtre visible de notre galerie.
+                 fenêtre visible du carrousel.
 
                  collection-track :
-                 piste contenant les créations.
+                 conteneur des créations.
 
-                 Le JavaScript déplace uniquement
-                 collection-track sur l'axe horizontal.
+                 collection-item :
+                 chaque création est animée séparément
+                 par collection-scroll.js.
             -->
 
             <div class="collection-viewport">
 
                 <div class="collection-track">
 
-
                     <!-- =====================================
-                         CRÉATION 01 — L'ORIGINEL
+                         CRÉATION 01 — BLEU MARINE CHÂTAIGNE
                          ===================================== -->
 
                     <article class="collection-item">
 
-                        <!--
-                            Emplacement de la photographie.
-
-                            Nous intégrerons ensuite notre
-                            image sur support anthracite.
-                        -->
                         <div class="collection-image">
-                            <!-- Photographie à venir -->
+
+                            <img
+                                src="<?php
+                                    echo esc_url(
+                                        get_template_directory_uri()
+                                        . '/images/Bleu_marine_chataigne.png'
+                                    );
+                                ?>"
+                                alt="Pain perdu Bleu Marine Châtaigne présenté sur des pierres calcaires blanches."
+                                loading="lazy"
+                            >
+
                         </div>
 
-                        <!-- Légende de la création -->
                         <div class="collection-caption">
 
                             <span>01 / SIGNATURE</span>
 
-                            <h3>L'ORIGINEL</h3>
+                            <h3>BLEU MARINE CHÂTAIGNE</h3>
 
                         </div>
 
@@ -185,20 +177,31 @@ get_header();
 
 
                     <!-- =====================================
-                         CRÉATION 02 — LE ROUGE
+                         CRÉATION 02 — LE DÉCONSTRUIT
                          ===================================== -->
 
                     <article class="collection-item">
 
                         <div class="collection-image">
-                            <!-- Photographie à venir -->
+
+                            <img
+                                src="<?php
+                                    echo esc_url(
+                                        get_template_directory_uri()
+                                        . '/images/deconstruit.png'
+                                    );
+                                ?>"
+                                alt="Trois morceaux de pain perdu caramélisé disposés sur une pierre calcaire, accompagnés de fines dentelles de caramel."
+                                loading="lazy"
+                            >
+
                         </div>
 
                         <div class="collection-caption">
 
-                            <span>02 / COLLECTION</span>
+                            <span>02 / SIGNATURE</span>
 
-                            <h3>LE ROUGE</h3>
+                            <h3>LE DÉCONSTRUIT</h3>
 
                         </div>
 
@@ -206,25 +209,35 @@ get_header();
 
 
                     <!-- =====================================
-                         CRÉATION 03 — L'OBSCUR
+                         CRÉATION 03 — LE 49.3 FROMAGES
                          ===================================== -->
 
                     <article class="collection-item">
 
                         <div class="collection-image">
-                            <!-- Photographie à venir -->
+
+                            <img
+                                src="<?php
+                                    echo esc_url(
+                                        get_template_directory_uri()
+                                        . '/images/49_3_fromages.png'
+                                    );
+                                ?>"
+                                alt="Pain perdu salé aux fromages fondants et feuilles d'or, présenté sur une pierre calcaire avec un petit pot en granit."
+                                loading="lazy"
+                            >
+
                         </div>
 
                         <div class="collection-caption">
 
-                            <span>03 / COLLECTION</span>
+                            <span>03 / SIGNATURE</span>
 
-                            <h3>L'OBSCUR</h3>
+                            <h3>LE 49.3 FROMAGES</h3>
 
                         </div>
 
                     </article>
-
 
                 </div>
                 <!-- Fin de collection-track -->
@@ -238,9 +251,90 @@ get_header();
     </section>
     <!-- Fin de la collection -->
 
+
+    
+<!-- =====================================================
+     SECTION 03 — LE MANIFESTE
+     =====================================================
+
+     Deux tableaux éditoriaux qui se succèdent
+     au rythme du défilement vertical.
+
+     Le JavaScript gère leur apparition progressive.
+     Le CSS gère le positionnement et l'esthétique.
+
+     Cette section est indépendante du carrousel
+     gastronomique précédent.
+-->
+
+<section
+    id="manifeste"
+    class="manifesto"
+    aria-label="Le manifeste de la maison MIETTES"
+>
+
+    <!-- Zone maintenue à l'écran pendant le scroll -->
+    <div class="manifesto-sticky">
+
+        <!-- Numéro de section -->
+        <div class="manifesto-heading">
+            <span>03 / MAISON MIETTES</span>
+            <span>MIETTES · PARIS</span>
+        </div>
+
+        <!-- Conteneur des deux tableaux -->
+        <div class="manifesto-content">
+
+            <!-- TABLEAU 01 — LA LIBERTÉ -->
+            <article class="manifesto-slide manifesto-slide--first">
+
+                <div class="manifesto-slide-inner">
+
+                    <h2>
+                        La libre communication des pensées
+                        et des opinions est un des droits
+                        les plus précieux de l'Homme.
+                    </h2>
+
+                </div>
+
+            </article>
+
+            <!-- TABLEAU 02 — LES VALEURS -->
+            <article class="manifesto-slide manifesto-slide--second">
+
+                <div class="manifesto-slide-inner">
+
+                    <h2>
+                        Valeurs. Traditions.
+                        <em>Le goût de l'essentiel.</em>
+                    </h2>
+
+                    <p class="manifesto-source">
+                        MIETTES — MAISON DE PAIN PERDU
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+        <!-- Signature discrète en bas -->
+        <div class="manifesto-footer">
+            <span>RIEN NE SE PERD. TOUT SE DÉSIRE.</span>
+            <span class="manifesto-counter">01 / 02</span>
+        </div>
+
+    </div>
+
+</section>
+<!-- Fin du manifeste -->
+
+
 </main>
 
 <?php
-// Charge le pied de page du thème.
+// Charge le pied de page WordPress.
 get_footer();
 ?>
