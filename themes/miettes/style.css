@@ -1053,3 +1053,546 @@ body.admin-bar .site-header {
     }
 }
 
+
+/* ==========================================================
+   14 — LA MAISON
+   ==========================================================
+
+   Direction artistique :
+   - brutalisme minimaliste ;
+   - typographies monumentales ;
+   - compositions asymétriques ;
+   - matières minérales ;
+   - espaces négatifs généreux.
+
+   Tous les styles sont limités à .maison
+   afin de préserver la homepage MIETTES.
+*/
+
+/* ----------------------------------------------------------
+   01 — STRUCTURE ET TYPOGRAPHIE COMMUNE
+   ---------------------------------------------------------- */
+
+.maison {
+    width: 100%;
+    overflow: clip;
+    background: var(--color-ivory);
+    color: var(--color-ink);
+}
+
+.maison .maison-index {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-greige);
+}
+
+.maison figure {
+    margin: 0;
+}
+
+.maison figcaption {
+    padding-top: 16px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------
+   02 — INTRODUCTION MONUMENTALE
+   ---------------------------------------------------------- */
+
+.maison-intro {
+    padding: 100px 5% 140px;
+}
+
+.maison-intro__heading {
+    margin-bottom: 80px;
+}
+
+.maison .maison-intro__title {
+    margin: 32px 0 0;
+    font-size: clamp(64px, 11.5vw, 190px);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.075em;
+    white-space: nowrap;
+}
+
+.maison-period {
+    color: var(--color-greige);
+}
+
+.maison .maison-intro__subtitle {
+    margin-top: 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+}
+
+.maison-intro__visual {
+    width: 100%;
+}
+
+.maison-intro__visual .maison-image-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #c9c5be;
+}
+
+/* ----------------------------------------------------------
+   03 — LE GESTE : ESPACE NÉGATIF
+   ---------------------------------------------------------- */
+
+.maison-geste {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    padding: 70px 5% 140px;
+    border-top: 1px solid var(--color-stone);
+}
+
+.maison-geste__content {
+    width: min(100%, 1050px);
+    margin: auto 0 auto auto;
+    padding: 100px 0;
+}
+
+.maison .maison-geste h2 {
+    margin: 0;
+    font-size: clamp(48px, 7.5vw, 116px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+}
+
+
+/* ----------------------------------------------------------
+   LE GESTE — SIGNATURE ÉDITORIALE
+   ----------------------------------------------------------
+
+   Contraste volontaire :
+   - titre monumental en sans-serif ;
+   - texte secondaire en serif italique ;
+   - alignement à droite ;
+   - espace négatif préservé.
+*/
+
+.maison .maison-geste p {
+    max-width: 580px;
+
+    /* Décale la citation vers la droite. */
+    margin: 65px 0 0 auto;
+
+    /* Typographie éditoriale, plus expressive. */
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(21px, 2.2vw, 32px);
+    font-style: italic;
+    font-weight: 400;
+
+    /* Lecture confortable sur plusieurs lignes. */
+    line-height: 1.45;
+    letter-spacing: -0.025em;
+    text-transform: none;
+
+    color: var(--color-ink);
+}
+
+/* Sur mobile, la citation reste lisible. */
+@media (max-width: 600px) {
+    .maison .maison-geste p {
+        max-width: 100%;
+        margin-top: 42px;
+        font-size: 22px;
+        line-height: 1.5;
+    }
+}
+
+
+/* ----------------------------------------------------------
+   04 — LA MATIÈRE : RUPTURE ANTHRACITE
+   ---------------------------------------------------------- */
+
+.maison-matiere {
+    min-height: 100vh;
+    padding: 100px 5% 150px;
+    background: #111210;
+    color: #eeeae2;
+}
+
+.maison-matiere__heading {
+    margin-bottom: 110px;
+}
+
+.maison .maison-matiere h2 {
+    margin: 45px 0 0;
+    font-size: clamp(60px, 10vw, 160px);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+}
+
+.maison-matiere__gallery {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: end;
+    gap: 8%;
+}
+
+.maison-matiere__image--large .maison-image-placeholder {
+    aspect-ratio: 4 / 5;
+    background: #77736c;
+}
+
+.maison-matiere__image--small {
+    margin-bottom: 15%;
+}
+
+.maison-matiere__image--small .maison-image-placeholder {
+    aspect-ratio: 3 / 4;
+    background: #b1aaa0;
+}
+
+.maison-matiere figcaption {
+    color: #aaa69e;
+}
+
+/* ----------------------------------------------------------
+   05 — L'ESSENTIEL : CONCLUSION ÉDITORIALE
+   ---------------------------------------------------------- */
+
+.maison-essentiel {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 5% 90px;
+}
+
+.maison .maison-essentiel h2 {
+    margin: auto 0;
+    font-size: clamp(70px, 13vw, 210px);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: -0.075em;
+}
+
+.maison-essentiel__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 50px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid currentColor;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------
+   06 — TABLETTES
+   ---------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .maison-intro {
+        padding-top: 80px;
+        padding-bottom: 100px;
+    }
+
+    .maison .maison-intro__title {
+        font-size: clamp(50px, 10.5vw, 110px);
+    }
+
+    .maison-geste__content {
+        padding: 80px 0;
+    }
+
+    .maison-matiere__gallery {
+        gap: 5%;
+    }
+}
+
+/* ----------------------------------------------------------
+   07 — MOBILE
+   ---------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .maison-intro {
+        padding: 70px 6% 90px;
+    }
+
+    .maison-intro__heading {
+        margin-bottom: 50px;
+    }
+
+    .maison .maison-intro__title {
+        font-size: clamp(40px, 10vw, 70px);
+        letter-spacing: -0.07em;
+    }
+
+    .maison-intro__visual .maison-image-placeholder {
+        aspect-ratio: 4 / 5;
+    }
+
+    .maison-geste {
+        min-height: 75vh;
+        padding: 50px 6% 80px;
+    }
+
+    .maison-geste__content {
+        padding: 90px 0;
+    }
+
+    .maison .maison-geste h2 {
+        font-size: clamp(36px, 9vw, 60px);
+    }
+
+    .maison .maison-geste p {
+        margin-top: 36px;
+        margin-left: 0;
+    }
+
+    .maison-matiere {
+        padding: 80px 6% 100px;
+    }
+
+    .maison-matiere__heading {
+        margin-bottom: 70px;
+    }
+
+    .maison .maison-matiere h2 {
+        font-size: clamp(45px, 11vw, 75px);
+    }
+
+    .maison-matiere__gallery {
+        grid-template-columns: 1fr;
+        gap: 65px;
+    }
+
+    .maison-matiere__image--small {
+        width: 75%;
+        margin: 0 0 0 auto;
+    }
+
+    .maison-essentiel {
+        min-height: 70vh;
+        padding: 60px 6%;
+    }
+
+    .maison .maison-essentiel h2 {
+        font-size: clamp(56px, 13vw, 100px);
+    }
+
+    .maison-essentiel__link {
+        gap: 20px;
+        font-size: 10px;
+    }
+}
+
+
+/* ==========================================================
+   15 — LA MAISON : PHOTOGRAPHIES
+   ==========================================================
+
+   Remplace les anciens espaces réservés par
+   des photographies aux proportions maîtrisées.
+
+   object-fit: cover permet de remplir le cadre
+   sans déformer l'image.
+*/
+
+/* 01 — Photographie architecturale principale */
+.maison-intro__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 02 — Photographies de la matière et de la lumière */
+.maison-matiere__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* La grande image adopte un cadrage vertical. */
+.maison-matiere__image--large img {
+    aspect-ratio: 4 / 5;
+}
+
+/* La petite image conserve une silhouette verticale. */
+.maison-matiere__image--small img {
+    aspect-ratio: 3 / 4;
+}
+
+/* 03 — Adaptation du visuel principal sur mobile */
+@media (max-width: 600px) {
+    .maison-intro__image {
+        aspect-ratio: 4 / 5;
+    }
+}
+
+
+
+/* ==========================================================
+   LA MAISON — BANNIÈRE PLEINE LARGEUR
+   ==========================================================
+
+   La photographie de la devanture occupe toute
+   la largeur de la fenêtre, indépendamment
+   du conteneur principal de la page.
+*/
+
+.maison .maison-intro__visual {
+    /* Sortir du conteneur centré */
+    width: 100vw;
+    max-width: none;
+
+    /* Centrer la bannière sur la fenêtre */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    /* Supprimer les marges internes éventuelles */
+    padding: 0;
+}
+
+
+/* ==========================================================
+   LA MAISON — BANNIÈRE SANS RECADRAGE
+   ==========================================================
+
+   On conserve la largeur totale de la bannière,
+   mais on laisse l'image déterminer sa hauteur.
+
+   Ainsi, la façade et l'enseigne MIETTES.
+   restent entièrement visibles.
+*/
+
+.maison .maison-intro__image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    /* Respecte les proportions originales */
+    aspect-ratio: auto;
+
+    /* Aucun recadrage */
+    object-fit: contain;
+}
+
+
+/* La légende conserve un retrait élégant */
+.maison .maison-intro__visual figcaption {
+    padding: 18px 5vw;
+}
+
+/* Adaptation mobile */
+@media (max-width: 600px) {
+    .maison .maison-intro__image {
+        height: 380px;
+        object-position: center;
+    }
+}
+
+
+/* ==========================================================
+   LA MAISON — CADRAGE DES PHOTOGRAPHIES
+   ==========================================================
+
+   Le pain perdu doit être visible entièrement,
+   sans être coupé par le conteneur.
+*/
+
+/* Grande photographie : pain perdu */
+.maison .maison-matiere__image--large img {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    /* Conserve les proportions naturelles de l'image */
+    aspect-ratio: auto;
+
+    /* Empêche le recadrage */
+    object-fit: contain;
+    object-position: center;
+}
+
+
+/* ==========================================================
+   FOOTER — SIGNATURE MIETTES & DRAPEAU FRANÇAIS
+   ========================================================== */
+
+/* Répartit la signature à gauche et le drapeau à droite. */
+.site-footer__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 38px 5vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Typographie sobre de la signature. */
+.site-footer__copyright {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+}
+
+/* Regroupe le drapeau et le nom du pays. */
+.site-footer__origin {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.site-footer__country {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+}
+
+/* Drapeau français : trois bandes verticales. */
+.site-footer__flag {
+    display: flex;
+    width: 24px;
+    height: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.site-footer__flag span {
+    flex: 1;
+}
+
+.site-footer__flag .flag-blue {
+    background-color: #002395;
+}
+
+.site-footer__flag .flag-white {
+    background-color: #ffffff;
+}
+
+.site-footer__flag .flag-red {
+    background-color: #ed2939;
+}
+
+/* Sur mobile, les deux éléments passent l'un sous l'autre. */
+@media (max-width: 600px) {
+    .site-footer__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .site-footer__copyright {
+        line-height: 1.8;
+    }
+}
