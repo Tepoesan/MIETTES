@@ -1596,3 +1596,37 @@ body.admin-bar .site-header {
         line-height: 1.8;
     }
 }
+
+
+/* ==========================================================
+   MIETTES — LA MAISON
+   Révélation progressive des photographies au scroll
+   ========================================================== */
+
+/*
+ * Les images restent invisibles uniquement lorsque
+ * JavaScript a activé l'animation sur la galerie.
+ *
+ * L'opacité est contrôlée par JavaScript selon le scroll.
+ * Aucune transition automatique : le défilement pilote
+ * directement l'intensité du fondu.
+ */
+.maison-matiere__gallery.is-scroll-ready
+[data-maison-reveal] {
+    opacity: 0;
+    will-change: opacity;
+}
+
+/*
+ * Respect des préférences d'accessibilité :
+ * les deux images restent visibles si l'utilisateur
+ * a demandé une réduction des animations.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .maison-matiere__gallery.is-scroll-ready
+    [data-maison-reveal] {
+        opacity: 1 !important;
+        will-change: auto;
+    }
+}
+

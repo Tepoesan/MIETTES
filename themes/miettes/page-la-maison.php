@@ -100,10 +100,13 @@ get_header();
             </h2>
         </div>
 
-        <div class="maison-matiere__gallery">
+        <!-- Galerie animée progressivement au défilement -->
+        <div class="maison-matiere__gallery" data-maison-scroll>
 
             
-            <figure class="maison-matiere__image maison-matiere__image--large">
+            <!-- Deuxième image à apparaître : LA TEXTURE -->
+            <figure class="maison-matiere__image maison-matiere__image--large"
+                    data-maison-reveal="second">
 
                 <!-- Gros plan sur la matière minérale. -->
                 <img
@@ -121,7 +124,9 @@ get_header();
 
 
             
-            <figure class="maison-matiere__image maison-matiere__image--small">
+             <!-- Première image à apparaître : LA LUMIÈRE -->
+            <figure class="maison-matiere__image maison-matiere__image--small"
+                    data-maison-reveal="first">
 
                 <!--
                     Photographie secondaire.

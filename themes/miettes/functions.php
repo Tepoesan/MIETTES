@@ -1,3 +1,4 @@
+
 <?php
 /**
  * ==========================================================
@@ -14,6 +15,10 @@
  *
  * 03 — manifesto-scroll.js
  *      Animation éditoriale du manifeste.
+ *
+ * 04 — maison-scroll.js
+ *      Révélation progressive des photographies
+ *      de la page La Maison.
  *
  * Chaque animation possède son propre fichier JS
  * pour faciliter la maintenance du thème.
@@ -38,7 +43,7 @@ function miettes_enqueue_assets() {
     /* ------------------------------------------------------
        01 — FEUILLE DE STYLE PRINCIPALE
        ------------------------------------------------------
-       
+
        wp_enqueue_style() charge notre style.css.
 
        get_stylesheet_uri() récupère son URL.
@@ -117,6 +122,49 @@ function miettes_enqueue_assets() {
         true
     );
 
+
+    /* ------------------------------------------------------
+       04 — JAVASCRIPT : LA MAISON
+       ------------------------------------------------------
+
+       Anime les deux photographies de la section
+       LA MATIÈRE sur la page La Maison.
+
+       Fonctionnement :
+       - La photographie de droite apparaît en premier.
+       - Une pause sépare les deux révélations.
+       - La photographie de gauche apparaît ensuite.
+       - Le défilement contrôle directement l'opacité.
+       - En remontant, l'animation s'inverse.
+
+       Le script est chargé uniquement sur la page
+       utilisant le slug "la-maison".
+
+       file_exists() vérifie la présence du fichier
+       avant de tenter de le charger.
+    */
+
+    if (is_page('la-maison')) {
+
+        // Chemin physique du fichier JavaScript.
+        $maison_js_path = get_template_directory()
+            . '/js/maison-scroll.js';
+
+        // Charge le script uniquement s'il existe.
+        if (file_exists($maison_js_path)) {
+
+            wp_enqueue_script(
+                'miettes-maison-scroll',
+                get_template_directory_uri()
+                    . '/js/maison-scroll.js',
+                array(),
+                filemtime($maison_js_path),
+                true
+            );
+
+        }
+    }
+
 }
 
 
@@ -129,6 +177,9 @@ function miettes_enqueue_assets() {
 
    Les fichiers sont automatiquement ajoutés
    aux pages du site utilisant le thème MIETTES.
+
+   Le script de La Maison constitue une exception :
+   il est chargé uniquement sur sa page dédiée.
 */
 
 add_action(
