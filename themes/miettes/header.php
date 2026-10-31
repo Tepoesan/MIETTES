@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 
@@ -5,7 +6,13 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <?php wp_head(); ?>
+    <?php
+    /**
+     * Charge les ressources CSS, JavaScript
+     * et les métadonnées nécessaires à WordPress.
+     */
+    wp_head();
+    ?>
 </head>
 
 <body <?php body_class(); ?>>
@@ -14,26 +21,70 @@
 
 
 <!-- ==========================================
-     MIETTES — En-tête principal
+     MIETTES — EN-TÊTE PRINCIPAL
      ==========================================
 
      Le header contient :
-     - le nom de la maison, cliquable ;
-     - une navigation vers les sections du site.
+     - Le logo MIETTES, lié à l'accueil.
+     - LA CARTE : section Collection.
+     - LA MAISON : page WordPress dédiée.
+     - CONTACT : page WordPress dédiée.
 
-     Son positionnement sticky est géré en CSS.
+     Son positionnement sticky reste géré en CSS.
 -->
+
+
+<?php
+/* ==========================================================
+   RÉCUPÉRATION DES LIENS WORDPRESS
+   ========================================================== */
+
+/*
+ * LA CARTE
+ *
+ * Pointe vers la section Collection
+ * de notre page d'accueil.
+ */
+$carte_url = home_url('/#collection');
+
+
+/*
+ * LA MAISON
+ *
+ * Recherche la page WordPress dont
+ * le slug est "la-maison".
+ */
+$maison_page = get_page_by_path('la-maison');
+
+$maison_url = (
+    $maison_page && $maison_page->post_status === 'publish'
+)
+    ? get_permalink($maison_page->ID)
+    : home_url('/');
+
+
+/*
+ * CONTACT
+ *
+ * Recherche la page WordPress
+ * publiée avec le slug "contact".
+ */
+$contact_page = get_page_by_path('contact');
+
+$contact_url = (
+    $contact_page && $contact_page->post_status === 'publish'
+)
+    ? get_permalink($contact_page->ID)
+    : home_url('/');
+?>
+
 
 <header class="site-header">
 
-    <!--
-        LOGO MIETTES
+    <!-- ==========================================
+         LOGO MIETTES
+         ========================================== -->
 
-        home_url('/') récupère l'adresse d'accueil.
-        esc_url() sécurise l'URL affichée.
-        bloginfo('name') affiche le nom défini
-        dans les réglages WordPress.
-    -->
     <a
         href="<?php echo esc_url(home_url('/')); ?>"
         class="site-logo"
@@ -41,29 +92,28 @@
         <?php bloginfo('name'); ?>
     </a>
 
-    <!--
-        NAVIGATION PRINCIPALE
 
-        aria-label donne un nom explicite
-        à la navigation pour les lecteurs d'écran.
+    <!-- ==========================================
+         NAVIGATION PRINCIPALE
+         ========================================== -->
 
-        Les liens pointent vers des identifiants
-        de sections de la page d'accueil.
-    -->
-    <nav class="site-nav" aria-label="Navigation principale">
+    <nav
+        class="site-nav"
+        aria-label="Navigation principale"
+    >
 
-        <!-- Future section présentant les créations. -->
-        <a href="<?php echo esc_url(home_url('/#collection')); ?>">
+        <!-- LA CARTE : galerie de l'accueil -->
+        <a href="<?php echo esc_url($carte_url); ?>">
             LA CARTE
         </a>
 
-        <!-- Future section présentant la maison. -->
-        <a href="<?php echo esc_url(home_url('/#maison')); ?>">
+        <!-- LA MAISON : page dédiée -->
+        <a href="<?php echo esc_url($maison_url); ?>">
             LA MAISON
         </a>
 
-        <!-- Future section de contact. -->
-        <a href="<?php echo esc_url(home_url('/#contact')); ?>">
+        <!-- CONTACT : page dédiée -->
+        <a href="<?php echo esc_url($contact_url); ?>">
             CONTACT
         </a>
 

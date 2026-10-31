@@ -1630,3 +1630,147 @@ body.admin-bar .site-header {
     }
 }
 
+
+/* ==========================================================
+   MIETTES — PAGES ÉDITORIALES
+   Politique de confidentialité, mentions légales...
+   ========================================================== */
+
+.miettes-page {
+    min-height: 100vh;
+    background: #f4f2ef;
+    color: #282724;
+    padding: 140px 24px 100px;
+}
+
+.miettes-page__article {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.miettes-page__header {
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #beb7ad;
+}
+
+.miettes-page__eyebrow {
+    display: block;
+    margin-bottom: 25px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.miettes-page__title {
+    font-size: clamp(36px, 6vw, 76px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+}
+
+.miettes-page__content {
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.miettes-page__content h2 {
+    margin: 55px 0 20px;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+}
+
+.miettes-page__content p {
+    margin-bottom: 22px;
+}
+
+.miettes-page__content ul {
+    margin: 20px 0 30px;
+    padding-left: 24px;
+    list-style: disc;
+}
+
+.miettes-page__content li {
+    margin-bottom: 10px;
+}
+
+.miettes-page__content a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.miettes-page__content a:hover {
+    color: #9a8065;
+}
+
+@media (max-width: 768px) {
+    .miettes-page {
+        padding: 110px 20px 70px;
+    }
+
+    .miettes-page__header {
+        margin-bottom: 50px;
+    }
+}
+
+
+/* ==========================================================
+   MIETTES — NAVIGATION DU FOOTER
+   ========================================================== */
+
+/*
+ * Organisation des liens secondaires.
+ * Flexbox permet de les disposer horizontalement.
+ */
+.site-footer__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+}
+
+/*
+ * Liens discrets, cohérents avec le design
+ * minimaliste de MIETTES.
+ */
+.site-footer__link {
+    color: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.site-footer__link:hover {
+    opacity: 0.55;
+}
+
+.site-footer__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+}
+
+/*
+ * Adaptation pour les petits écrans.
+ * Les éléments du footer passent en colonne.
+ */
+@media (max-width: 768px) {
+
+    .site-footer__inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        text-align: center;
+    }
+
+    .site-footer__nav {
+        gap: 12px 20px;
+    }
+
+}
+
+
