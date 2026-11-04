@@ -1,229 +1,208 @@
-
 <?php
 /**
  * ==========================================================
  * MIETTES — FONCTIONS DU THÈME WORDPRESS
  * ==========================================================
  *
- * Gestion des ressources CSS et JavaScript.
+ * Gestion centralisée des ressources CSS et JavaScript.
  *
- * 01 — style.css
- *      Feuille de style principale du site.
+ * OBJECTIFS :
+ * - Charger uniquement les scripts nécessaires.
+ * - Conserver la compatibilité avec les IDs locaux.
+ * - Préparer une future migration WordPress.
+ * - Vérifier l'existence des fichiers.
+ * - Actualiser automatiquement le cache.
  *
- * 02 — collection-scroll.js
- *      Carrousel cinématique des créations.
+ * ARCHITECTURE :
  *
- * 03 — manifesto-scroll.js
- *      Animation éditoriale du manifeste.
+ * GLOBAL
+ *   style.css
  *
- * 04 — maison-scroll.js
- *      Révélation progressive des photographies
- *      de la page La Maison.
+ * ACCUEIL
+ *   collection-scroll.js
+ *   manifesto-scroll.js
  *
- * 05 — contact-slot.js
- *      Défilement vertical du logo MIETTES
- *      sur la page Contact.
+ * LA MAISON
+ *   maison-scroll.js
  *
- * Chaque animation possède son propre fichier
- * JavaScript pour faciliter la maintenance.
- *
- * L'ancien script ghost-logo.js n'est plus utilisé.
+ * CONTACT
+ *   contact-slot.js
  */
 
 
 /* ==========================================================
-   CHARGEMENT DES RESSOURCES CSS ET JAVASCRIPT
+   01 — FONCTION UTILITAIRE JAVASCRIPT
    ========================================================== */
 
 /**
- * Charge les ressources du thème.
+ * Charge un fichier JavaScript du thème.
  *
- * Cette fonction est exécutée grâce au hook
- * WordPress wp_enqueue_scripts.
+ * @param string $handle   Identifiant unique du script.
+ * @param string $filename Nom du fichier JavaScript.
+ *
+ * Le fichier doit se trouver dans /js/.
+ */
+function miettes_enqueue_script($handle, $filename) {
+
+    // Empêche l'utilisation de chemins arbitraires.
+    if (
+        !is_string($filename) ||
+        basename($filename) !== $filename
+    ) {
+        return;
+    }
+
+    // Chemin physique du fichier.
+    $file_path = get_theme_file_path(
+        '/js/' . $filename
+    );
+
+    // Vérification de son existence.
+    if (!is_file($file_path)) {
+        return;
+    }
+
+    // URL publique du fichier.
+    $file_url = get_theme_file_uri(
+        '/js/' . $filename
+    );
+
+    // Version automatique pour éviter un cache obsolète.
+    $version = filemtime($file_path);
+
+    // Chargement du JavaScript dans le pied de page.
+    wp_enqueue_script(
+        $handle,
+        $file_url,
+        array(),
+        $version,
+        array(
+            'in_footer' => true
+        )
+    );
+}
+
+
+/* ==========================================================
+   02 — CHARGEMENT DES RESSOURCES
+   ========================================================== */
+
+/**
+ * Charge les fichiers CSS et JavaScript
+ * uniquement sur les pages concernées.
  */
 function miettes_enqueue_assets() {
 
     /* ------------------------------------------------------
-       01 — FEUILLE DE STYLE PRINCIPALE
-       ------------------------------------------------------
+       A — CSS GLOBAL
+       ------------------------------------------------------ */
 
-       get_stylesheet_uri() récupère l'URL du CSS.
+    $css_path = get_stylesheet_directory()
+        . '/style.css';
 
-       filemtime() utilise la date de modification
-       comme version pour actualiser le cache.
-    */
+    // Version de secours.
+    $css_version = wp_get_theme()->get('Version');
+
+    if (is_file($css_path)) {
+        $css_version = filemtime($css_path);
+    }
 
     wp_enqueue_style(
         'miettes-style',
         get_stylesheet_uri(),
         array(),
-        filemtime(
-            get_stylesheet_directory() . '/style.css'
-        )
+        $css_version
     );
 
 
     /* ------------------------------------------------------
-       02 — JAVASCRIPT : COLLECTION CINÉMATIQUE
+       B — ACCUEIL
        ------------------------------------------------------
 
-       Anime les créations gastronomiques pendant
-       le défilement vertical de la page d'accueil.
+       is_front_page() fonctionne avec la page
+       d'accueil configurée dans WordPress.
 
-       Le script contrôle notamment :
-       - La position des photographies.
-       - Leur taille.
-       - Leur opacité.
-       - Leur superposition.
+       is_home() n'est pas ajouté car il peut
+       correspondre à une page d'articles distincte.
     */
 
-    wp_enqueue_script(
-        'miettes-collection-scroll',
-        get_template_directory_uri()
-            . '/js/collection-scroll.js',
-        array(),
-        filemtime(
-            get_template_directory()
-                . '/js/collection-scroll.js'
-        ),
-        true
-    );
+    if (is_front_page()) {
 
+        // Animation de la collection.
+        miettes_enqueue_script(
+            'miettes-collection-scroll',
+            'collection-scroll.js'
+        );
 
-    /* ------------------------------------------------------
-       03 — JAVASCRIPT : LE MANIFESTE
-       ------------------------------------------------------
-
-       Anime les deux tableaux éditoriaux :
-
-       01 — La libre communication des pensées
-            et des opinions...
-
-       02 — Valeurs. Traditions.
-            Le goût de l'essentiel.
-
-       Le script fonctionne indépendamment
-       de la Collection.
-    */
-
-    wp_enqueue_script(
-        'miettes-manifesto-scroll',
-        get_template_directory_uri()
-            . '/js/manifesto-scroll.js',
-        array(),
-        filemtime(
-            get_template_directory()
-                . '/js/manifesto-scroll.js'
-        ),
-        true
-    );
-
-
-    /* ------------------------------------------------------
-       04 — JAVASCRIPT : LA MAISON
-       ------------------------------------------------------
-
-       Anime les photographies de la section
-       LA MATIÈRE sur la page La Maison.
-
-       Fonctionnement :
-       - Apparition de la photographie de droite.
-       - Pause entre les deux révélations.
-       - Apparition de la photographie de gauche.
-       - Inversion de l'animation au scroll inverse.
-
-       Ce script est chargé uniquement sur
-       la page dont le slug est "la-maison".
-    */
-
-    if (is_page('la-maison')) {
-
-        // Chemin physique du fichier JavaScript.
-        $maison_js_path = get_template_directory()
-            . '/js/maison-scroll.js';
-
-        // Vérifie que le fichier existe.
-        if (file_exists($maison_js_path)) {
-
-            wp_enqueue_script(
-                'miettes-maison-scroll',
-                get_template_directory_uri()
-                    . '/js/maison-scroll.js',
-                array(),
-                filemtime($maison_js_path),
-                true
-            );
-
-        }
+        // Animation du manifeste.
+        miettes_enqueue_script(
+            'miettes-manifesto-scroll',
+            'manifesto-scroll.js'
+        );
     }
 
 
     /* ------------------------------------------------------
-       05 — JAVASCRIPT : CONTACT / SLOT MACHINE
+       C — PAGE LA MAISON
        ------------------------------------------------------
 
-       Anime le grand logo MIETTES sur la page Contact.
+       Compatible avec :
+       - Le slug "la-maison".
+       - Le template page-la-maison.php.
 
-       Fonctionnement prévu :
-       - Défilement vertical des inscriptions MIETTES.
-       - Ralentissement progressif.
-       - Léger rebond à l'arrêt.
-       - Apparition progressive du reflet.
-
-       L'animation dure environ deux secondes.
-
-       Le JavaScript vérifie également la préférence
-       d'accessibilité prefers-reduced-motion.
-
-       Le script est chargé uniquement sur
-       la page Contact, identifiée par l'ID 10.
+       WordPress reconnaît le template utilisé
+       même lorsque les permaliens sont numériques.
     */
 
-    if (is_page(10)) {
+    if (
+        is_page('la-maison') ||
+        is_page_template('page-la-maison.php')
+    ) {
 
-        // Chemin physique du script Contact.
-        $contact_js_path = get_template_directory()
-            . '/js/contact-slot.js';
-
-        // Ne charge le script que s'il existe.
-        if (file_exists($contact_js_path)) {
-
-            wp_enqueue_script(
-                'miettes-contact-slot',
-                get_template_directory_uri()
-                    . '/js/contact-slot.js',
-                array(),
-                filemtime($contact_js_path),
-                true
-            );
-
-        }
+        miettes_enqueue_script(
+            'miettes-maison-scroll',
+            'maison-scroll.js'
+        );
     }
 
+
+    /* ------------------------------------------------------
+       D — PAGE CONTACT
+       ------------------------------------------------------
+
+       Compatible avec :
+       - L'ID local 10.
+       - Le slug "contact".
+       - Le template page-contact.php.
+
+       L'ID 10 est conservé temporairement
+       pour ton environnement local.
+
+       Après migration, il pourra être supprimé.
+    */
+
+    if (
+        is_page(10) ||
+        is_page('contact') ||
+        is_page_template('page-contact.php')
+    ) {
+
+        miettes_enqueue_script(
+            'miettes-contact-slot',
+            'contact-slot.js'
+        );
+    }
 }
 
 
 /* ==========================================================
-   ACTIVATION DU CHARGEMENT
-   ==========================================================
+   03 — ACTIVATION WORDPRESS
+   ========================================================== */
 
-   WordPress appelle miettes_enqueue_assets()
-   au moment du chargement des ressources du thème.
-
-   Chargement global :
-   - style.css
-   - collection-scroll.js
-   - manifesto-scroll.js
-
-   Chargement conditionnel :
-   - maison-scroll.js : page La Maison.
-   - contact-slot.js : page Contact.
-
-   Les scripts sont chargés dans le pied de page
-   grâce au dernier argument true de
-   wp_enqueue_script().
-*/
-
+/**
+ * WordPress appelle cette fonction au moment
+ * de préparer les ressources du thème.
+ */
 add_action(
     'wp_enqueue_scripts',
     'miettes_enqueue_assets'
