@@ -1,0 +1,265 @@
+
+<?php
+/**
+ * ==========================================================
+ * MIETTES — PAGE CONTACT
+ * ==========================================================
+ *
+ * Template spécifique à la page Contact.
+ *
+ * Composition :
+ *
+ * 01 — Hero : logo MIETTES animé et reflet.
+ * 02 — En-tête éditorial CONTACT / ©27.
+ * 03 — Coordonnées et présentation de la maison.
+ * 04 — Photographie gastronomique.
+ *
+ * Le header et le footer restent communs au site.
+ *
+ * CORRECTIONS :
+ * - Suppression de l'ancienne section WordPress.
+ * - Suppression de la signature éditoriale en double.
+ *
+ * IMPORTANT :
+ * Les coordonnées sont fictives et utilisées
+ * uniquement pour ce projet de démonstration.
+ */
+
+get_header();
+?>
+
+<main id="main-content" class="miettes-contact">
+
+    <!-- ==========================================
+         01 — HERO / LOGO MIETTES ANIMÉ
+         ========================================== -->
+
+    <section
+        class="contact-slot"
+        aria-label="Maison MIETTES"
+    >
+
+        <!-- Signature au-dessus du logo -->
+        <p class="contact-slot__eyebrow">
+            MAISON DE PAIN PERDU · PARIS
+        </p>
+
+        <!--
+            Fenêtre de défilement du logo.
+
+            Les classes ci-dessous sont utilisées
+            par contact-slot.js et style.css.
+
+            On les conserve pour ne pas perturber
+            l'animation existante.
+        -->
+        <div class="contact-slot__window">
+
+            <div
+                class="contact-slot__reel"
+                aria-hidden="true"
+            >
+
+                <span>MIETTES</span>
+                <span>MIETTES</span>
+                <span>MIETTES</span>
+                <span>MIETTES</span>
+
+            </div>
+
+        </div>
+
+        <!-- Reflet inversé du logo -->
+        <div
+            class="contact-slot__reflection"
+            aria-hidden="true"
+        >
+            MIETTES
+        </div>
+
+        <!-- Nom accessible aux lecteurs d'écran -->
+        <span class="screen-reader-text">
+            MIETTES — Maison de pain perdu
+        </span>
+
+    </section>
+
+
+    <!-- ==========================================
+         02 — COMPOSITION ÉDITORIALE
+         ========================================== -->
+
+    <section
+        class="contact-editorial"
+        aria-labelledby="contact-title"
+    >
+
+        <!-- En-tête monumental -->
+        <div class="contact-editorial__heading">
+
+            <div class="contact-editorial__heading-main">
+
+                <span class="contact-editorial__eyebrow">
+                    ÉCRIVEZ-NOUS
+                </span>
+
+                <h1
+                    id="contact-title"
+                    class="contact-editorial__title"
+                >
+                    CONTACT
+                </h1>
+
+            </div>
+
+            <!-- Numéro d'édition graphique -->
+            <span
+                class="contact-editorial__edition"
+                aria-label="Édition 2027"
+            >
+                ©27
+            </span>
+
+        </div>
+
+
+        <!-- ======================================
+             03 — GRILLE DES INFORMATIONS
+             ====================================== -->
+
+        <div class="contact-editorial__body">
+
+            <!-- COLONNE 01 : COORDONNÉES -->
+            <div class="contact-editorial__details">
+
+                <div class="contact-editorial__detail">
+
+                    <h2>
+                        PRESSE & COLLABORATIONS
+                    </h2>
+
+                    <a href="mailto:presse@miettes.fr">
+                        presse@miettes.fr
+                    </a>
+
+                </div>
+
+                <div class="contact-editorial__detail">
+
+                    <h2>
+                        PARTENARIATS
+                    </h2>
+
+                    <a href="mailto:partenariat@miettes.fr">
+                        partenariat@miettes.fr
+                    </a>
+
+                </div>
+
+                <div class="contact-editorial__detail">
+
+                    <h2>
+                        INFORMATIONS GÉNÉRALES
+                    </h2>
+
+                    <a href="mailto:contact@miettes.fr">
+                        contact@miettes.fr
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLONNE 02 : TEXTE ÉDITORIAL -->
+            <div class="contact-editorial__story">
+
+                <h2 class="contact-editorial__story-title">
+                    UNE QUESTION, UN PROJET,
+                    UNE ENVIE DE COLLABORATION ?
+                </h2>
+
+                <p class="contact-editorial__story-text">
+                    Nous sommes à votre écoute pour toute
+                    demande, proposition ou simple curiosité
+                    autour de l'univers MIETTES.
+                </p>
+
+                <!-- Localisation de la maison -->
+                <div class="contact-editorial__address">
+
+                    <span
+                        class="contact-editorial__dash"
+                        aria-hidden="true"
+                    ></span>
+
+                    <h3>
+                        LA MAISON MIETTES
+                    </h3>
+
+                    <p>
+                        PARIS — FRANCE
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLONNE 03 : PHOTOGRAPHIE -->
+            <figure class="contact-editorial__visual">
+
+                <?php
+                /**
+                 * Image générée pour la page Contact.
+                 *
+                 * Emplacement :
+                 * themes/miettes/images/contact-matiere.png
+                 *
+                 * get_template_directory_uri()
+                 * construit automatiquement son URL.
+                 *
+                 * esc_url() sécurise l'URL affichée.
+                 */
+                ?>
+
+                <img
+                    src="<?php
+                        echo esc_url(
+                            get_template_directory_uri()
+                            . '/images/contact-matiere.png'
+                        );
+                    ?>"
+                    alt="Sculpture de beurre sur une pierre brute"
+                    loading="lazy"
+                    decoding="async"
+                >
+
+            </figure>
+
+        </div>
+
+    </section>
+
+</main>
+
+<?php
+/**
+ * ==========================================================
+ * FOOTER GLOBAL
+ * ==========================================================
+ *
+ * On utilise uniquement footer.php.
+ *
+ * L'ancienne signature ©2027 présente dans
+ * la section Contact a été supprimée.
+ *
+ * L'ancien contenu de l'éditeur WordPress
+ * n'est plus affiché dans ce template.
+ *
+ * Il reste néanmoins enregistré dans WordPress
+ * et peut être réutilisé ultérieurement.
+ */
+get_footer();
+?>
+
