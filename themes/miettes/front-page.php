@@ -50,24 +50,45 @@ get_header();
 
         </div>
 
+
         <!-- Photographie principale en pleine largeur -->
         <div class="hero-visual">
 
-            <img
-                src="<?php
-                    echo esc_url(
-                        get_template_directory_uri()
-                        . '/images/hero_accueil.png'
-                    );
-                ?>"
-                alt="Pain perdu caramélisé présenté sur une pierre brute, accompagné de deux créations sur des socles minéraux."
-                class="hero-image"
-                width="1536"
-                height="1024"
-                fetchpriority="high"
-            >
+            <!--
+                MIETTES — HERO optimisé
+
+                Le navigateur privilégie le format WebP.
+                Le PNG original reste disponible en secours.
+
+                On conserve les classes CSS et les dimensions
+                pour préserver le design existant.
+            -->
+            <picture>
+
+                <!-- Version WebP optimisée -->
+                <source
+                    srcset="<?php echo esc_url(
+                        get_theme_file_uri('images/hero_accueil.webp')
+                    ); ?>"
+                    type="image/webp"
+                >
+
+                <!-- Version PNG de secours -->
+                <img
+                    src="<?php echo esc_url(
+                        get_theme_file_uri('images/hero_accueil.png')
+                    ); ?>"
+                    alt="Pain perdu caramélisé présenté sur une pierre brute, accompagné de deux créations sur des socles minéraux."
+                    class="hero-image"
+                    width="1536"
+                    height="1024"
+                    fetchpriority="high"
+                >
+
+            </picture>
 
         </div>
+
 
         <!-- Informations sous la photographie -->
         <div class="hero-bottom">
@@ -152,16 +173,29 @@ get_header();
 
                         <div class="collection-image">
 
-                            <img
-                                src="<?php
-                                    echo esc_url(
-                                        get_template_directory_uri()
-                                        . '/images/Bleu_marine_chataigne.png'
-                                    );
-                                ?>"
-                                alt="Pain perdu Bleu Marine Châtaigne présenté sur des pierres calcaires blanches."
-                                loading="lazy"
-                            >
+
+                            <picture>
+                                <!-- Version WebP optimisée -->
+                                <source
+                                    srcset="<?php echo esc_url(
+                                        get_theme_file_uri('images/Bleu_marine_chataigne.webp')
+                                    ); ?>"
+                                    type="image/webp"
+                                >
+
+                                <!-- PNG original en secours -->
+                                <img
+                                    src="<?php echo esc_url(
+                                        get_theme_file_uri('images/Bleu_marine_chataigne.png')
+                                    ); ?>"
+                                    alt="Pain perdu Bleu Marine Châtaigne présenté sur des pierres calcaires blanches."
+                                    width="1536"
+                                    height="1024"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            </picture>
+
 
                         </div>
 
@@ -184,16 +218,27 @@ get_header();
 
                         <div class="collection-image">
 
-                            <img
-                                src="<?php
-                                    echo esc_url(
-                                        get_template_directory_uri()
-                                        . '/images/deconstruit.png'
-                                    );
-                                ?>"
-                                alt="Trois morceaux de pain perdu caramélisé disposés sur une pierre calcaire, accompagnés de fines dentelles de caramel."
-                                loading="lazy"
-                            >
+
+                            <picture>
+                                <source
+                                    srcset="<?php echo esc_url(
+                                        get_theme_file_uri('images/deconstruit.webp')
+                                    ); ?>"
+                                    type="image/webp"
+                                >
+
+                                <img
+                                    src="<?php echo esc_url(
+                                        get_theme_file_uri('images/deconstruit.png')
+                                    ); ?>"
+                                    alt="Trois morceaux de pain perdu caramélisé disposés sur une pierre calcaire, accompagnés de fines dentelles de caramel."
+                                    width="1536"
+                                    height="1024"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            </picture>
+
 
                         </div>
 
@@ -216,16 +261,27 @@ get_header();
 
                         <div class="collection-image">
 
-                            <img
-                                src="<?php
-                                    echo esc_url(
-                                        get_template_directory_uri()
-                                        . '/images/49_3_fromages.png'
-                                    );
-                                ?>"
-                                alt="Pain perdu salé aux fromages fondants et feuilles d'or, présenté sur une pierre calcaire avec un petit pot en granit."
-                                loading="lazy"
-                            >
+
+                            <picture>
+                                <source
+                                    srcset="<?php echo esc_url(
+                                        get_theme_file_uri('images/49_3_fromages.webp')
+                                    ); ?>"
+                                    type="image/webp"
+                                >
+
+                                <img
+                                    src="<?php echo esc_url(
+                                        get_theme_file_uri('images/49_3_fromages.png')
+                                    ); ?>"
+                                    alt="Pain perdu salé aux fromages fondants et feuilles d'or, présenté sur une pierre calcaire avec un petit pot en granit."
+                                    width="1536"
+                                    height="1024"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            </picture>
+
 
                         </div>
 
