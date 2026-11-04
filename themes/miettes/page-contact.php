@@ -7,32 +7,33 @@
  *
  * Template spécifique à la page Contact.
  *
- * Composition :
- *
+ * COMPOSITION :
  * 01 — Hero : logo MIETTES animé et reflet.
  * 02 — En-tête éditorial CONTACT / ©27.
  * 03 — Coordonnées et présentation de la maison.
  * 04 — Photographie gastronomique.
  *
- * Le header et le footer restent communs au site.
- *
- * CORRECTIONS :
- * - Suppression de l'ancienne section WordPress.
- * - Suppression de la signature éditoriale en double.
+ * OPTIMISATIONS :
+ * - Image WebP avec PNG de secours.
+ * - Dimensions explicites de l'image.
+ * - Chargement différé de la photographie.
+ * - URL générée et échappée avec WordPress.
+ * - Conservation des classes CSS et attributs JS.
  *
  * IMPORTANT :
  * Les coordonnées sont fictives et utilisées
  * uniquement pour ce projet de démonstration.
  */
 
+// Charge l'en-tête global du thème.
 get_header();
 ?>
 
 <main id="main-content" class="miettes-contact">
 
-    <!-- ==========================================
+    <!-- =====================================================
          01 — HERO / LOGO MIETTES ANIMÉ
-         ========================================== -->
+         ===================================================== -->
 
     <section
         class="contact-slot"
@@ -47,11 +48,11 @@ get_header();
         <!--
             Fenêtre de défilement du logo.
 
-            Les classes ci-dessous sont utilisées
+            Les classes suivantes sont utilisées
             par contact-slot.js et style.css.
 
-            On les conserve pour ne pas perturber
-            l'animation existante.
+            On les conserve pour préserver
+            le fonctionnement de l'animation.
         -->
         <div class="contact-slot__window">
 
@@ -85,9 +86,9 @@ get_header();
     </section>
 
 
-    <!-- ==========================================
+    <!-- =====================================================
          02 — COMPOSITION ÉDITORIALE
-         ========================================== -->
+         ===================================================== -->
 
     <section
         class="contact-editorial"
@@ -123,13 +124,16 @@ get_header();
         </div>
 
 
-        <!-- ======================================
+        <!-- =================================================
              03 — GRILLE DES INFORMATIONS
-             ====================================== -->
+             ================================================= -->
 
         <div class="contact-editorial__body">
 
-            <!-- COLONNE 01 : COORDONNÉES -->
+            <!-- =============================================
+                 COLONNE 01 — COORDONNÉES
+                 ============================================= -->
+
             <div class="contact-editorial__details">
 
                 <div class="contact-editorial__detail">
@@ -171,7 +175,10 @@ get_header();
             </div>
 
 
-            <!-- COLONNE 02 : TEXTE ÉDITORIAL -->
+            <!-- =============================================
+                 COLONNE 02 — TEXTE ÉDITORIAL
+                 ============================================= -->
+
             <div class="contact-editorial__story">
 
                 <h2 class="contact-editorial__story-title">
@@ -206,34 +213,63 @@ get_header();
             </div>
 
 
-            <!-- COLONNE 03 : PHOTOGRAPHIE -->
+            <!-- =============================================
+                 COLONNE 03 — PHOTOGRAPHIE
+                 ============================================= -->
+
             <figure class="contact-editorial__visual">
 
-                <?php
-                /**
-                 * Image générée pour la page Contact.
-                 *
-                 * Emplacement :
-                 * themes/miettes/images/contact-matiere.png
-                 *
-                 * get_template_directory_uri()
-                 * construit automatiquement son URL.
-                 *
-                 * esc_url() sécurise l'URL affichée.
-                 */
-                ?>
+                <!--
+                    Photographie gastronomique de MIETTES.
 
-                <img
-                    src="<?php
-                        echo esc_url(
-                            get_template_directory_uri()
-                            . '/images/contact-matiere.png'
-                        );
-                    ?>"
-                    alt="Sculpture de beurre sur une pierre brute"
-                    loading="lazy"
-                    decoding="async"
-                >
+                    WebP :
+                    Format optimisé chargé en priorité.
+
+                    PNG :
+                    Format original conservé en secours.
+
+                    get_theme_file_uri() :
+                    Génère l'URL de l'image du thème.
+
+                    esc_url() :
+                    Échappe l'URL pour son affichage HTML.
+
+                    width / height :
+                    Réservent les proportions de l'image
+                    pour limiter les décalages de mise en page.
+
+                    loading="lazy" :
+                    Diffère le chargement de cette image
+                    lorsqu'elle est hors de l'écran.
+                -->
+
+                <picture>
+
+                    <!-- Version WebP optimisée -->
+                    <source
+                        srcset="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/contact-matiere.webp'
+                            )
+                        ); ?>"
+                        type="image/webp"
+                    >
+
+                    <!-- PNG original en secours -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/contact-matiere.png'
+                            )
+                        ); ?>"
+                        alt="Sculpture de beurre sur une pierre brute"
+                        width="1254"
+                        height="1254"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                </picture>
 
             </figure>
 
@@ -249,17 +285,11 @@ get_header();
  * FOOTER GLOBAL
  * ==========================================================
  *
- * On utilise uniquement footer.php.
+ * Charge footer.php.
  *
- * L'ancienne signature ©2027 présente dans
- * la section Contact a été supprimée.
- *
- * L'ancien contenu de l'éditeur WordPress
- * n'est plus affiché dans ce template.
- *
- * Il reste néanmoins enregistré dans WordPress
- * et peut être réutilisé ultérieurement.
+ * L'ancienne signature éditoriale en double
+ * et l'ancien contenu de l'éditeur WordPress
+ * ne sont pas affichés dans ce template.
  */
 get_footer();
 ?>
-
