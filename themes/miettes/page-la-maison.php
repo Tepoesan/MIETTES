@@ -1,57 +1,105 @@
 
 <?php
 /**
- * Template de la page « La Maison ».
+ * ==========================================================
+ * MIETTES — PAGE LA MAISON
+ * ==========================================================
  *
- * WordPress utilise automatiquement ce fichier
- * pour une page dont le slug est « la-maison ».
+ * WordPress utilise automatiquement ce template
+ * pour la page dont le slug est « la-maison ».
  *
- * Organisation :
+ * ORGANISATION :
  * 01 — Introduction
  * 02 — Le Geste
  * 03 — La Matière
  * 04 — L'Essentiel
+ *
+ * OPTIMISATIONS :
+ * - Images WebP avec PNG de secours.
+ * - Dimensions explicites pour limiter le CLS.
+ * - Chargement différé des images secondaires.
+ * - URLs générées et échappées avec WordPress.
+ * - Conservation des classes CSS et attributs JS.
  */
 
+// Charge l'en-tête global du thème.
 get_header();
 ?>
 
 <main id="main-content" class="maison">
 
-    <!-- ==========================================
+    <!-- =====================================================
          01 — INTRODUCTION
-         ========================================== -->
-    <section class="maison-intro" aria-labelledby="maison-title">
+         ===================================================== -->
+
+    <section
+        class="maison-intro"
+        aria-labelledby="maison-title"
+    >
 
         <div class="maison-intro__heading">
-            <span class="maison-index">01 / NOTRE UNIVERS</span>
 
-            <h1 id="maison-title" class="maison-intro__title">
+            <span class="maison-index">
+                01 / NOTRE UNIVERS
+            </span>
+
+            <h1
+                id="maison-title"
+                class="maison-intro__title"
+            >
                 LA MAISON<span class="maison-period">.</span>
             </h1>
 
             <p class="maison-intro__subtitle">
                 UNE AUTRE IDÉE DE L'ESSENTIEL.
             </p>
+
         </div>
 
-        
+
+        <!-- ================================================
+             PHOTOGRAPHIE PRINCIPALE — ARCHITECTURE
+             ================================================ -->
+
         <figure class="maison-intro__visual">
 
             <!--
-                Photographie principale de LA MAISON.
-                get_template_directory_uri() récupère
-                l'URL du dossier de notre thème WordPress.
+                WebP : version optimisée prioritaire.
+                PNG : solution de secours.
+
+                fetchpriority="high" donne la priorité
+                à cette image importante de la page.
+
+                Les dimensions correspondent au fichier
+                original : 1575 × 999 pixels.
             -->
-            <img
-                src="<?php echo esc_url(
-                    get_template_directory_uri() . '/images/architecture.png'
-                ); ?>"
-                alt="Architecture brutaliste en pierre minérale, traversée par une lumière naturelle."
-                class="maison-intro__image"
-                fetchpriority="high"
-                decoding="async"
-            >
+
+            <picture>
+
+                <source
+                    srcset="<?php echo esc_url(
+                        get_theme_file_uri(
+                            'images/architecture.webp'
+                        )
+                    ); ?>"
+                    type="image/webp"
+                >
+
+                <img
+                    src="<?php echo esc_url(
+                        get_theme_file_uri(
+                            'images/architecture.png'
+                        )
+                    ); ?>"
+                    alt="Architecture brutaliste en pierre minérale, traversée par une lumière naturelle."
+                    class="maison-intro__image"
+                    width="1575"
+                    height="999"
+                    fetchpriority="high"
+                    decoding="async"
+                >
+
+            </picture>
 
             <figcaption>
                 MIETTES — LABO
@@ -59,17 +107,24 @@ get_header();
 
         </figure>
 
-
     </section>
 
-    <!-- ==========================================
-         02 — LE GESTE
-         ========================================== -->
-    <section class="maison-geste" aria-labelledby="geste-title">
 
-        <span class="maison-index">02 / LE GESTE</span>
+    <!-- =====================================================
+         02 — LE GESTE
+         ===================================================== -->
+
+    <section
+        class="maison-geste"
+        aria-labelledby="geste-title"
+    >
+
+        <span class="maison-index">
+            02 / LE GESTE
+        </span>
 
         <div class="maison-geste__content">
+
             <h2 id="geste-title">
                 LE SAVOIR FAIRE.<br>
                 ET LE FAIRE<br>
@@ -81,90 +136,200 @@ get_header();
                 à la justesse des matières et à la beauté
                 de ce qui n'a pas besoin d'en faire trop.
             </p>
+
         </div>
 
     </section>
 
-    <!-- ==========================================
+
+    <!-- =====================================================
          03 — LA MATIÈRE
-         ========================================== -->
-    <section class="maison-matiere" aria-labelledby="matiere-title">
+         ===================================================== -->
+
+    <section
+        class="maison-matiere"
+        aria-labelledby="matiere-title"
+    >
 
         <div class="maison-matiere__heading">
-            <span class="maison-index">03 / LA MATIÈRE</span>
+
+            <span class="maison-index">
+                03 / LA MATIÈRE
+            </span>
 
             <h2 id="matiere-title">
                 RESISTER.<br>
                 PRESERVER.<br>
                 TRANSMETTRE.
             </h2>
+
         </div>
 
-        <!-- Galerie animée progressivement au défilement -->
-        <div class="maison-matiere__gallery" data-maison-scroll>
 
-            
-            <!-- Deuxième image à apparaître : LA TEXTURE -->
-            <figure class="maison-matiere__image maison-matiere__image--large"
-                    data-maison-reveal="second">
+        <!-- ================================================
+             GALERIE CINÉMATIQUE
+             ================================================
 
-                <!-- Gros plan sur la matière minérale. -->
-                <img
-                    src="<?php echo esc_url(
-                        get_template_directory_uri() . '/images/texture.png'
-                    ); ?>"
-                    alt="Gros plan sur une pierre brute aux reliefs irréguliers et aux ombres profondes."
-                    loading="lazy"
-                    decoding="async"
-                >
+             data-maison-scroll :
+             identifie la galerie pour maison-scroll.js.
 
-                <figcaption>01 / LA TEXTURE</figcaption>
+             data-maison-reveal :
+             définit l'ordre d'apparition des images.
+
+             Ces attributs sont conservés afin de
+             préserver les animations existantes.
+        -->
+
+        <div
+            class="maison-matiere__gallery"
+            data-maison-scroll
+        >
+
+
+            <!-- ============================================
+                 IMAGE 01 — LA TEXTURE
+                 ============================================
+
+                 Deuxième image à apparaître.
+
+                 Le conteneur conserve :
+                 - maison-matiere__image
+                 - maison-matiere__image--large
+                 - data-maison-reveal="second"
+            -->
+
+            <figure
+                class="maison-matiere__image maison-matiere__image--large"
+                data-maison-reveal="second"
+            >
+
+                <picture>
+
+                    <!-- WebP optimisé -->
+                    <source
+                        srcset="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/texture.webp'
+                            )
+                        ); ?>"
+                        type="image/webp"
+                    >
+
+                    <!-- PNG de secours -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/texture.png'
+                            )
+                        ); ?>"
+                        alt="Gros plan sur une pierre brute aux reliefs irréguliers et aux ombres profondes."
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                </picture>
+
+                <figcaption>
+                    01 / LA TEXTURE
+                </figcaption>
 
             </figure>
 
 
-            
-             <!-- Première image à apparaître : LA LUMIÈRE -->
-            <figure class="maison-matiere__image maison-matiere__image--small"
-                    data-maison-reveal="first">
+            <!-- ============================================
+                 IMAGE 02 — LA LUMIÈRE
+                 ============================================
 
-                <!--
-                    Photographie secondaire.
-                    Le nom du fichier contient un accent :
-                    lumière.png
-                -->
-                <img
-                    src="<?php echo esc_url(
-                        get_template_directory_uri() . '/images/lumière.png'
-                    ); ?>"
-                    alt="Lumière rasante dessinant des ombres géométriques sur une architecture en pierre."
-                    loading="lazy"
-                    decoding="async"
-                >
+                 Première image à apparaître.
 
-                <figcaption>02 / LA LUMIÈRE</figcaption>
+                 IMPORTANT :
+                 Le fichier s'appelle maintenant
+                 lumiere.png, sans accent.
+
+                 Les noms sans accents facilitent
+                 la compatibilité entre environnements.
+
+                 L'attribut data-maison-reveal="first"
+                 conserve l'ordre de l'animation.
+            -->
+
+            <figure
+                class="maison-matiere__image maison-matiere__image--small"
+                data-maison-reveal="first"
+            >
+
+                <picture>
+
+                    <!-- WebP optimisé -->
+                    <source
+                        srcset="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/lumiere.webp'
+                            )
+                        ); ?>"
+                        type="image/webp"
+                    >
+
+                    <!-- PNG de secours -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri(
+                                'images/lumiere.png'
+                            )
+                        ); ?>"
+                        alt="Lumière rasante dessinant des ombres géométriques sur une architecture en pierre."
+                        width="1024"
+                        height="1536"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                </picture>
+
+                <figcaption>
+                    02 / LA LUMIÈRE
+                </figcaption>
 
             </figure>
-
 
         </div>
 
     </section>
 
-    <!-- ==========================================
-         04 — L'ESSENTIEL
-         ========================================== -->
-    <section class="maison-essentiel" aria-labelledby="essentiel-title">
 
-        <span class="maison-index">04 / L'ESSENTIEL</span>
+    <!-- =====================================================
+         04 — L'ESSENTIEL
+         ===================================================== -->
+
+    <section
+        class="maison-essentiel"
+        aria-labelledby="essentiel-title"
+    >
+
+        <span class="maison-index">
+            04 / L'ESSENTIEL
+        </span>
 
         <h2 id="essentiel-title">
             RIEN<br>
             À AJOUTER.
         </h2>
 
-        <a class="maison-essentiel__link"
-           href="<?php echo esc_url(home_url('/#collections')); ?>">
+        <!--
+            Retour vers la collection de l'accueil.
+
+            L'identifiant correct est #collection
+            et non #collections.
+        -->
+
+        <a
+            class="maison-essentiel__link"
+            href="<?php echo esc_url(
+                home_url('/#collection')
+            ); ?>"
+        >
             DÉCOUVRIR NOS CRÉATIONS
             <span aria-hidden="true">↗</span>
         </a>
@@ -173,4 +338,10 @@ get_header();
 
 </main>
 
-<?php get_footer(); ?>
+<?php
+/**
+ * Charge le pied de page WordPress.
+ * Celui-ci exécute également wp_footer().
+ */
+get_footer();
+?>
