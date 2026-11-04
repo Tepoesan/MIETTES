@@ -2724,6 +2724,7 @@ body.admin-bar .site-header {
 }
 
 
+
 /* ----------------------------------------------------------
    21.3 — PHOTOGRAPHIE ET FONDU
    ----------------------------------------------------------
@@ -2744,6 +2745,14 @@ body.admin-bar .site-header {
     inset: 0;
     z-index: -1;
 
+    /*
+     * FOND DE SECOURS — PNG
+     *
+     * Utilisé par les navigateurs qui ne prennent
+     * pas en charge la fonction image-set().
+     *
+     * Le dégradé sombre améliore la lisibilité.
+     */
     background-image:
         linear-gradient(
             90deg,
@@ -2753,12 +2762,37 @@ body.admin-bar .site-header {
         ),
         url("images/privacy-background.png");
 
+    /*
+     * FOND OPTIMISÉ — WEBP
+     *
+     * Le navigateur choisit un format compatible.
+     * Le PNG reste disponible en alternative.
+     *
+     * Les couleurs du dégradé sont conservées.
+     */
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(40, 39, 36, 0.72) 0%,
+            rgba(40, 39, 36, 0.35) 55%,
+            rgba(40, 39, 36, 0.10) 100%
+        ),
+        image-set(
+            url("images/privacy-background.webp") type("image/webp"),
+            url("images/privacy-background.png") type("image/png")
+        );
+
+    /*
+     * CADRAGE DE LA PHOTOGRAPHIE
+     *
+     * On conserve le positionnement original.
+     */
     background-position: center, center 45%;
     background-size: cover;
     background-repeat: no-repeat;
 
     /*
-     * Fondu supérieur :
+     * FONDU SUPÉRIEUR
      *
      * 0 %  : photographie invisible.
      * 12 % : photographie légèrement visible.
@@ -2766,7 +2800,6 @@ body.admin-bar .site-header {
      *
      * Le bas de l'image reste net.
      */
-
     -webkit-mask-image: linear-gradient(
         to bottom,
         transparent 0%,
@@ -2783,8 +2816,13 @@ body.admin-bar .site-header {
         black 100%
     );
 
+    /*
+     * Le calque décoratif ne doit pas
+     * intercepter les clics de l'utilisateur.
+     */
     pointer-events: none;
 }
+
 
 /* Supprime l'ancien élément décoratif. */
 .miettes-privacy .privacy-hero::after {
