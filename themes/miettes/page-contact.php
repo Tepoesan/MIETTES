@@ -243,33 +243,32 @@ get_header();
                     lorsqu'elle est hors de l'écran.
                 -->
 
-                <picture>
 
-                    <!-- Version WebP optimisée -->
-                    <source
-                        srcset="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/contact-matiere.webp'
-                            )
-                        ); ?>"
-                        type="image/webp"
-                    >
+                <!--
+                    MIETTES — CONTACT : LA MATIÈRE
 
-                    <!-- PNG original en secours -->
-                    <img
-                        src="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/contact-matiere.png'
-                            )
-                        ); ?>"
-                        alt="Sculpture de beurre sur une pierre brute"
-                        width="1254"
-                        height="1254"
-                        loading="lazy"
-                        decoding="async"
-                    >
+                    Photographie optimisée au format WebP.
 
-                </picture>
+                    get_theme_file_uri() génère l'URL du fichier.
+                    esc_url() sécurise son affichage HTML.
+
+                    Les dimensions 1254 × 1254 sont conservées
+                    pour limiter les décalages de mise en page.
+
+                    loading="lazy" diffère le chargement de l'image.
+                    decoding="async" permet un décodage asynchrone.
+                -->
+                <img
+                    src="<?php echo esc_url(
+                        get_theme_file_uri('images/contact-matiere.webp')
+                    ); ?>"
+                    alt="Sculpture de beurre sur une pierre brute"
+                    width="1254"
+                    height="1254"
+                    loading="lazy"
+                    decoding="async"
+                >
+
 
             </figure>
 

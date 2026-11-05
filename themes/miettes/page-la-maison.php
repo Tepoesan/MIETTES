@@ -15,7 +15,7 @@
  * 04 — L'Essentiel
  *
  * OPTIMISATIONS :
- * - Images WebP avec PNG de secours.
+ * - Images exclusivement au format WebP.
  * - Dimensions explicites pour limiter le CLS.
  * - Chargement différé des images secondaires.
  * - URLs générées et échappées avec WordPress.
@@ -64,42 +64,31 @@ get_header();
         <figure class="maison-intro__visual">
 
             <!--
-                WebP : version optimisée prioritaire.
-                PNG : solution de secours.
+                MIETTES — ARCHITECTURE
 
-                fetchpriority="high" donne la priorité
-                à cette image importante de la page.
+                Image principale optimisée en WebP.
 
-                Les dimensions correspondent au fichier
-                original : 1575 × 999 pixels.
+                La classe CSS et les dimensions sont
+                conservées pour préserver le cadrage.
+
+                fetchpriority="high" indique au navigateur
+                que cette photographie est prioritaire.
+
+                decoding="async" permet au navigateur
+                de décoder l'image de manière asynchrone.
             -->
 
-            <picture>
-
-                <source
-                    srcset="<?php echo esc_url(
-                        get_theme_file_uri(
-                            'images/architecture.webp'
-                        )
-                    ); ?>"
-                    type="image/webp"
-                >
-
-                <img
-                    src="<?php echo esc_url(
-                        get_theme_file_uri(
-                            'images/architecture.png'
-                        )
-                    ); ?>"
-                    alt="Architecture brutaliste en pierre minérale, traversée par une lumière naturelle."
-                    class="maison-intro__image"
-                    width="1575"
-                    height="999"
-                    fetchpriority="high"
-                    decoding="async"
-                >
-
-            </picture>
+            <img
+                src="<?php echo esc_url(
+                    get_theme_file_uri('images/architecture.webp')
+                ); ?>"
+                alt="Architecture brutaliste en pierre minérale, traversée par une lumière naturelle."
+                class="maison-intro__image"
+                width="1575"
+                height="999"
+                fetchpriority="high"
+                decoding="async"
+            >
 
             <figcaption>
                 MIETTES — LABO
@@ -176,8 +165,8 @@ get_header();
              data-maison-reveal :
              définit l'ordre d'apparition des images.
 
-             Ces attributs sont conservés afin de
-             préserver les animations existantes.
+             Les animations JavaScript existantes
+             restent inchangées.
         -->
 
         <div
@@ -196,6 +185,8 @@ get_header();
                  - maison-matiere__image
                  - maison-matiere__image--large
                  - data-maison-reveal="second"
+
+                 L'image est chargée en WebP uniquement.
             -->
 
             <figure
@@ -203,33 +194,28 @@ get_header();
                 data-maison-reveal="second"
             >
 
-                <picture>
+                <!--
+                    MIETTES — LA TEXTURE
 
-                    <!-- WebP optimisé -->
-                    <source
-                        srcset="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/texture.webp'
-                            )
-                        ); ?>"
-                        type="image/webp"
-                    >
+                    Photographie WebP optimisée.
 
-                    <!-- PNG de secours -->
-                    <img
-                        src="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/texture.png'
-                            )
-                        ); ?>"
-                        alt="Gros plan sur une pierre brute aux reliefs irréguliers et aux ombres profondes."
-                        width="1536"
-                        height="1024"
-                        loading="lazy"
-                        decoding="async"
-                    >
+                    loading="lazy" diffère le chargement
+                    lorsque l'image est hors écran.
 
-                </picture>
+                    Les dimensions explicites limitent
+                    les décalages de mise en page.
+                -->
+
+                <img
+                    src="<?php echo esc_url(
+                        get_theme_file_uri('images/texture.webp')
+                    ); ?>"
+                    alt="Gros plan sur une pierre brute aux reliefs irréguliers et aux ombres profondes."
+                    width="1536"
+                    height="1024"
+                    loading="lazy"
+                    decoding="async"
+                >
 
                 <figcaption>
                     01 / LA TEXTURE
@@ -244,12 +230,9 @@ get_header();
 
                  Première image à apparaître.
 
-                 IMPORTANT :
-                 Le fichier s'appelle maintenant
-                 lumiere.png, sans accent.
-
-                 Les noms sans accents facilitent
-                 la compatibilité entre environnements.
+                 Le fichier s'appelle lumiere.webp,
+                 sans accent, pour une meilleure
+                 compatibilité entre environnements.
 
                  L'attribut data-maison-reveal="first"
                  conserve l'ordre de l'animation.
@@ -260,33 +243,28 @@ get_header();
                 data-maison-reveal="first"
             >
 
-                <picture>
+                <!--
+                    MIETTES — LA LUMIÈRE
 
-                    <!-- WebP optimisé -->
-                    <source
-                        srcset="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/lumiere.webp'
-                            )
-                        ); ?>"
-                        type="image/webp"
-                    >
+                    Photographie verticale au format WebP.
 
-                    <!-- PNG de secours -->
-                    <img
-                        src="<?php echo esc_url(
-                            get_theme_file_uri(
-                                'images/lumiere.png'
-                            )
-                        ); ?>"
-                        alt="Lumière rasante dessinant des ombres géométriques sur une architecture en pierre."
-                        width="1024"
-                        height="1536"
-                        loading="lazy"
-                        decoding="async"
-                    >
+                    Les dimensions originales et
+                    le chargement différé sont conservés.
 
-                </picture>
+                    L'animation est pilotée par
+                    l'attribut du conteneur figure.
+                -->
+
+                <img
+                    src="<?php echo esc_url(
+                        get_theme_file_uri('images/lumiere.webp')
+                    ); ?>"
+                    alt="Lumière rasante dessinant des ombres géométriques sur une architecture en pierre."
+                    width="1024"
+                    height="1536"
+                    loading="lazy"
+                    decoding="async"
+                >
 
                 <figcaption>
                     02 / LA LUMIÈRE

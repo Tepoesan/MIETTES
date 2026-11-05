@@ -54,38 +54,28 @@ get_header();
         <!-- Photographie principale en pleine largeur -->
         <div class="hero-visual">
 
-            <!--
-                MIETTES — HERO optimisé
 
-                Le navigateur privilégie le format WebP.
-                Le PNG original reste disponible en secours.
+        <!--
+            MIETTES — HERO optimisé en WebP
 
-                On conserve les classes CSS et les dimensions
-                pour préserver le design existant.
-            -->
-            <picture>
+            Image principale de la page d'accueil.
+            On conserve les dimensions et la classe CSS
+            pour préserver le design existant.
 
-                <!-- Version WebP optimisée -->
-                <source
-                    srcset="<?php echo esc_url(
-                        get_theme_file_uri('images/hero_accueil.webp')
-                    ); ?>"
-                    type="image/webp"
-                >
+            fetchpriority="high" donne la priorité
+            au chargement de cette photographie.
+        -->
+        <img
+            src="<?php echo esc_url(
+                get_theme_file_uri('images/hero_accueil.webp')
+            ); ?>"
+            alt="Pain perdu caramélisé présenté sur une pierre brute, accompagné de deux créations sur des socles minéraux."
+            class="hero-image"
+            width="1536"
+            height="1024"
+            fetchpriority="high"
+        >
 
-                <!-- Version PNG de secours -->
-                <img
-                    src="<?php echo esc_url(
-                        get_theme_file_uri('images/hero_accueil.png')
-                    ); ?>"
-                    alt="Pain perdu caramélisé présenté sur une pierre brute, accompagné de deux créations sur des socles minéraux."
-                    class="hero-image"
-                    width="1536"
-                    height="1024"
-                    fetchpriority="high"
-                >
-
-            </picture>
 
         </div>
 
@@ -165,135 +155,107 @@ get_header();
 
                 <div class="collection-track">
 
-                    <!-- =====================================
-                         CRÉATION 01 — BLEU MARINE CHÂTAIGNE
-                         ===================================== -->
 
-                    <article class="collection-item">
+            <!-- =====================================
+                CRÉATION 01 — BLEU MARINE CHÂTAIGNE
+                ===================================== -->
 
-                        <div class="collection-image">
+            <article class="collection-item">
 
+                <div class="collection-image">
 
-                            <picture>
-                                <!-- Version WebP optimisée -->
-                                <source
-                                    srcset="<?php echo esc_url(
-                                        get_theme_file_uri('images/Bleu_marine_chataigne.webp')
-                                    ); ?>"
-                                    type="image/webp"
-                                >
+                    <!--
+                        Image WebP optimisée.
+                        Chargement différé pour améliorer
+                        les performances de la page.
+                    -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri('images/Bleu_marine_chataigne.webp')
+                        ); ?>"
+                        alt="Pain perdu Bleu Marine Châtaigne présenté sur des pierres calcaires blanches."
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                    >
 
-                                <!-- PNG original en secours -->
-                                <img
-                                    src="<?php echo esc_url(
-                                        get_theme_file_uri('images/Bleu_marine_chataigne.png')
-                                    ); ?>"
-                                    alt="Pain perdu Bleu Marine Châtaigne présenté sur des pierres calcaires blanches."
-                                    width="1536"
-                                    height="1024"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </picture>
+                </div>
 
+                <div class="collection-caption">
+                    <span>01 / SIGNATURE</span>
+                    <h3>BLEU MARINE CHÂTAIGNE</h3>
+                </div>
 
-                        </div>
-
-                        <div class="collection-caption">
-
-                            <span>01 / SIGNATURE</span>
-
-                            <h3>BLEU MARINE CHÂTAIGNE</h3>
-
-                        </div>
-
-                    </article>
+            </article>
 
 
-                    <!-- =====================================
-                         CRÉATION 02 — LE DÉCONSTRUIT
-                         ===================================== -->
+            <!-- =====================================
+                CRÉATION 02 — LE DÉCONSTRUIT
+                ===================================== -->
 
-                    <article class="collection-item">
+            <article class="collection-item">
 
-                        <div class="collection-image">
+                <div class="collection-image">
 
+                    <!--
+                        Image WebP uniquement.
+                        Dimensions conservées pour éviter
+                        les décalages pendant le chargement.
+                    -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri('images/deconstruit.webp')
+                        ); ?>"
+                        alt="Trois morceaux de pain perdu caramélisé disposés sur une pierre calcaire, accompagnés de fines dentelles de caramel."
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                    >
 
-                            <picture>
-                                <source
-                                    srcset="<?php echo esc_url(
-                                        get_theme_file_uri('images/deconstruit.webp')
-                                    ); ?>"
-                                    type="image/webp"
-                                >
+                </div>
 
-                                <img
-                                    src="<?php echo esc_url(
-                                        get_theme_file_uri('images/deconstruit.png')
-                                    ); ?>"
-                                    alt="Trois morceaux de pain perdu caramélisé disposés sur une pierre calcaire, accompagnés de fines dentelles de caramel."
-                                    width="1536"
-                                    height="1024"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </picture>
+                <div class="collection-caption">
+                    <span>02 / SIGNATURE</span>
+                    <h3>LE DÉCONSTRUIT</h3>
+                </div>
 
-
-                        </div>
-
-                        <div class="collection-caption">
-
-                            <span>02 / SIGNATURE</span>
-
-                            <h3>LE DÉCONSTRUIT</h3>
-
-                        </div>
-
-                    </article>
+            </article>
 
 
-                    <!-- =====================================
-                         CRÉATION 03 — LE 49.3 FROMAGES
-                         ===================================== -->
+            <!-- =====================================
+                CRÉATION 03 — LE 49.3 FROMAGES
+                ===================================== -->
 
-                    <article class="collection-item">
+            <article class="collection-item">
 
-                        <div class="collection-image">
+                <div class="collection-image">
 
+                    <!--
+                        Photographie optimisée en WebP.
+                        Chargement différé et décodage
+                        asynchrone conservés.
+                    -->
+                    <img
+                        src="<?php echo esc_url(
+                            get_theme_file_uri('images/49_3_fromages.webp')
+                        ); ?>"
+                        alt="Pain perdu salé aux fromages fondants et feuilles d'or, présenté sur une pierre calcaire avec un petit pot en granit."
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                    >
 
-                            <picture>
-                                <source
-                                    srcset="<?php echo esc_url(
-                                        get_theme_file_uri('images/49_3_fromages.webp')
-                                    ); ?>"
-                                    type="image/webp"
-                                >
+                </div>
 
-                                <img
-                                    src="<?php echo esc_url(
-                                        get_theme_file_uri('images/49_3_fromages.png')
-                                    ); ?>"
-                                    alt="Pain perdu salé aux fromages fondants et feuilles d'or, présenté sur une pierre calcaire avec un petit pot en granit."
-                                    width="1536"
-                                    height="1024"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </picture>
+                <div class="collection-caption">
+                    <span>03 / SIGNATURE</span>
+                    <h3>LE 49.3 FROMAGES</h3>
+                </div>
 
-
-                        </div>
-
-                        <div class="collection-caption">
-
-                            <span>03 / SIGNATURE</span>
-
-                            <h3>LE 49.3 FROMAGES</h3>
-
-                        </div>
-
-                    </article>
+            </article>
 
                 </div>
                 <!-- Fin de collection-track -->

@@ -2412,30 +2412,27 @@ body.admin-bar .site-header {
     /* Empêche les éléments animés de déborder. */
     overflow: hidden;
 
-    /*
-     * FOND PHOTOGRAPHIQUE — MIETTES
-     *
-     * Le PNG est déclaré en premier comme secours.
-     * image-set() permet au navigateur de choisir
-     * une version compatible, en privilégiant WebP.
-     *
-     * Le cadrage reste centré et couvre tout le hero.
-     */
 
-    background-color: #101010;
+/*
+ * FOND PHOTOGRAPHIQUE — MIETTES CONTACT
+ *
+ * L'image utilise directement le format WebP.
+ * Aucun PNG de secours n'est nécessaire.
+ *
+ * Le cadrage et les dimensions d'affichage
+ * restent identiques à la version précédente.
+ */
 
-    /* Version PNG de secours. */
-    background-image: url("images/contact-hero-bg.png");
+background-color: #101010;
 
-    /* Versions proposées au navigateur. */
-    background-image: image-set(
-        url("images/contact-hero-bg.webp") type("image/webp"),
-        url("images/contact-hero-bg.png") type("image/png")
-    );
+/* Photographie WebP optimisée. */
+background-image: url("images/contact-hero-bg.webp");
 
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
+/* Cadrage conservé. */
+background-position: center center;
+background-size: cover;
+background-repeat: no-repeat;
+
 
     /* Couleur ivoire pour le logo et les textes. */
     color: #f4f2ef;
@@ -2745,31 +2742,17 @@ body.admin-bar .site-header {
     inset: 0;
     z-index: -1;
 
-    /*
-     * FOND DE SECOURS — PNG
-     *
-     * Utilisé par les navigateurs qui ne prennent
-     * pas en charge la fonction image-set().
-     *
-     * Le dégradé sombre améliore la lisibilité.
-     */
-    background-image:
-        linear-gradient(
-            90deg,
-            rgba(40, 39, 36, 0.72) 0%,
-            rgba(40, 39, 36, 0.35) 55%,
-            rgba(40, 39, 36, 0.10) 100%
-        ),
-        url("images/privacy-background.png");
 
     /*
-     * FOND OPTIMISÉ — WEBP
-     *
-     * Le navigateur choisit un format compatible.
-     * Le PNG reste disponible en alternative.
-     *
-     * Les couleurs du dégradé sont conservées.
-     */
+    * FOND PHOTOGRAPHIQUE — CONFIDENTIALITÉ
+    *
+    * Image optimisée au format WebP uniquement.
+    *
+    * Le dégradé sombre est conservé au-dessus
+    * de la photographie pour assurer la lisibilité.
+    *
+    * Les couleurs et les opacités restent identiques.
+    */
     background-image:
         linear-gradient(
             90deg,
@@ -2777,10 +2760,7 @@ body.admin-bar .site-header {
             rgba(40, 39, 36, 0.35) 55%,
             rgba(40, 39, 36, 0.10) 100%
         ),
-        image-set(
-            url("images/privacy-background.webp") type("image/webp"),
-            url("images/privacy-background.png") type("image/png")
-        );
+        url("images/privacy-background.webp");
 
     /*
      * CADRAGE DE LA PHOTOGRAPHIE
