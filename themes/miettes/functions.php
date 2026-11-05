@@ -1,3 +1,4 @@
+
 <?php
 /**
  * ==========================================================
@@ -7,26 +8,36 @@
  * Gestion centralisée des ressources CSS et JavaScript.
  *
  * OBJECTIFS :
- * - Charger uniquement les scripts nécessaires.
- * - Conserver la compatibilité avec les IDs locaux.
- * - Préparer une future migration WordPress.
- * - Vérifier l'existence des fichiers.
- * - Actualiser automatiquement le cache.
+ * - Organiser les feuilles CSS en composants.
+ * - Respecter l'ordre de chargement des styles.
+ * - Charger les animations uniquement si nécessaire.
+ * - Éviter les identifiants WordPress propres à une installation.
+ * - Vérifier l'existence des fichiers avant leur chargement.
+ * - Actualiser automatiquement le cache après modification.
  *
- * ARCHITECTURE :
+ * ARCHITECTURE CSS :
  *
- * GLOBAL
- *   style.css
+ * assets/css/base.css
+ *   Variables, reset, styles globaux et accessibilité.
+ *
+ * assets/css/header.css
+ *   Header, logo, navigation et barre admin WordPress.
+ *
+ * style.css
+ *   En-tête du thème et composants encore à migrer.
+ *   Conserve temporairement les adaptations responsive.
+ *
+ * JAVASCRIPT :
  *
  * ACCUEIL
- *   collection-scroll.js
- *   manifesto-scroll.js
+ *   js/collection-scroll.js
+ *   js/manifesto-scroll.js
  *
  * LA MAISON
- *   maison-scroll.js
+ *   js/maison-scroll.js
  *
  * CONTACT
- *   contact-slot.js
+ *   js/contact-slot.js
  */
 
 
@@ -40,11 +51,11 @@
  * @param string $handle   Identifiant unique du script.
  * @param string $filename Nom du fichier JavaScript.
  *
- * Le fichier doit se trouver dans /js/.
+ * Les scripts sont recherchés dans le dossier /js/.
  */
 function miettes_enqueue_script($handle, $filename) {
 
-    // Empêche l'utilisation de chemins arbitraires.
+    // Vérifie le type et empêche les chemins arbitraires.
     if (
         !is_string($filename) ||
         basename($filename) !== $filename
@@ -52,12 +63,12 @@ function miettes_enqueue_script($handle, $filename) {
         return;
     }
 
-    // Chemin physique du fichier.
+    // Chemin physique du fichier JavaScript.
     $file_path = get_theme_file_path(
         '/js/' . $filename
     );
 
-    // Vérification de son existence.
+    // Ne charge pas un fichier inexistant.
     if (!is_file($file_path)) {
         return;
     }
@@ -67,10 +78,11 @@ function miettes_enqueue_script($handle, $filename) {
         '/js/' . $filename
     );
 
-    // Version automatique pour éviter un cache obsolète.
+    // Version basée sur la dernière modification.
+    // Permet au navigateur de récupérer les changements.
     $version = filemtime($file_path);
 
-    // Chargement du JavaScript dans le pied de page.
+    // Charge le script dans le pied de page.
     wp_enqueue_script(
         $handle,
         $file_url,
@@ -88,53 +100,146 @@ function miettes_enqueue_script($handle, $filename) {
    ========================================================== */
 
 /**
- * Charge les fichiers CSS et JavaScript
- * uniquement sur les pages concernées.
+ * Charge les feuilles CSS et les scripts JavaScript
+ * selon la page WordPress actuellement affichée.
  */
 function miettes_enqueue_assets() {
 
     /* ------------------------------------------------------
-       A — CSS GLOBAL
+       A — ARCHITECTURE CSS
+       ------------------------------------------------------
+
+       ORDRE DE CHARGEMENT :
+
+       1. base.css
+          Design system, reset et styles globaux.
+
+       2. header.css
+          En-tête, logo et navigation.
+
+       3. style.css
+          Composants restants et surcharges responsive.
+
+       Les dépendances WordPress garantissent cet ordre
+       lorsque les fichiers concernés existent.
+    */
+
+
+    /* ------------------------------------------------------
+       A.1 — BASE CSS
        ------------------------------------------------------ */
 
+    // Chemin physique de la feuille CSS de base.
+    $base_css_path = get_theme_file_path(
+        '/assets/css/base.css'
+    );
+
+    // Vérifie la présence du fichier.
+    $base_css_exists = is_file($base_css_path);
+
+    if ($base_css_exists) {
+
+        // Charge les fondations graphiques du thème.
+        wp_enqueue_style(
+            'miettes-base',
+            get_theme_file_uri('/assets/css/base.css'),
+            array(),
+            filemtime($base_css_path)
+        );
+    }
+
+
+    /* ------------------------------------------------------
+       A.2 — HEADER CSS
+       ------------------------------------------------------ */
+
+    // Chemin physique du composant header.
+    $header_css_path = get_theme_file_path(
+        '/assets/css/header.css'
+    );
+
+    // Vérifie que le fichier a bien été créé.
+    $header_css_exists = is_file($header_css_path);
+
+    if ($header_css_exists) {
+
+        // Le header dépend de base.css uniquement
+        // lorsque cette feuille est disponible.
+        $header_dependencies = $base_css_exists
+            ? array('miettes-base')
+            : array();
+
+        // Charge les styles du header.
+        wp_enqueue_style(
+            'miettes-header',
+            get_theme_file_uri('/assets/css/header.css'),
+            $header_dependencies,
+            filemtime($header_css_path)
+        );
+    }
+
+
+    /* ------------------------------------------------------
+       A.3 — STYLE CSS PRINCIPAL
+       ------------------------------------------------------
+
+       WordPress utilise également style.css
+       pour identifier le thème.
+
+       Pendant la migration, ce fichier conserve
+       les composants qui n'ont pas encore été
+       déplacés vers assets/css/.
+    */
+
+    // Chemin physique de style.css.
     $css_path = get_stylesheet_directory()
         . '/style.css';
 
-    // Version de secours.
-    $css_version = wp_get_theme()->get('Version');
+    // Actualise la version après chaque modification.
+    $css_version = is_file($css_path)
+        ? filemtime($css_path)
+        : wp_get_theme()->get('Version');
 
-    if (is_file($css_path)) {
-        $css_version = filemtime($css_path);
+    // Prépare les dépendances dans le bon ordre.
+    $css_dependencies = array();
+
+    if ($base_css_exists) {
+        $css_dependencies[] = 'miettes-base';
     }
 
+    if ($header_css_exists) {
+        $css_dependencies[] = 'miettes-header';
+    }
+
+    // Charge la feuille principale après les composants.
     wp_enqueue_style(
         'miettes-style',
         get_stylesheet_uri(),
-        array(),
+        $css_dependencies,
         $css_version
     );
 
 
     /* ------------------------------------------------------
-       B — ACCUEIL
+       B — PAGE D'ACCUEIL
        ------------------------------------------------------
 
-       is_front_page() fonctionne avec la page
-       d'accueil configurée dans WordPress.
+       is_front_page() détecte la page d'accueil
+       configurée dans les réglages WordPress.
 
-       is_home() n'est pas ajouté car il peut
-       correspondre à une page d'articles distincte.
+       Les animations suivantes ne sont chargées
+       que sur cette page.
     */
 
     if (is_front_page()) {
 
-        // Animation de la collection.
+        // Défilement horizontal de la collection.
         miettes_enqueue_script(
             'miettes-collection-scroll',
             'collection-scroll.js'
         );
 
-        // Animation du manifeste.
+        // Apparition animée du manifeste.
         miettes_enqueue_script(
             'miettes-manifesto-scroll',
             'manifesto-scroll.js'
@@ -146,12 +251,11 @@ function miettes_enqueue_assets() {
        C — PAGE LA MAISON
        ------------------------------------------------------
 
-       Compatible avec :
-       - Le slug "la-maison".
-       - Le template page-la-maison.php.
+       Détection par :
+       - le slug "la-maison" ;
+       - le template page-la-maison.php.
 
-       WordPress reconnaît le template utilisé
-       même lorsque les permaliens sont numériques.
+       Aucun identifiant WordPress local n'est utilisé.
     */
 
     if (
@@ -159,6 +263,7 @@ function miettes_enqueue_assets() {
         is_page_template('page-la-maison.php')
     ) {
 
+        // Animations au défilement de La Maison.
         miettes_enqueue_script(
             'miettes-maison-scroll',
             'maison-scroll.js'
@@ -170,23 +275,20 @@ function miettes_enqueue_assets() {
        D — PAGE CONTACT
        ------------------------------------------------------
 
-       Compatible avec :
-       - L'ID local 10.
-       - Le slug "contact".
-       - Le template page-contact.php.
+       Détection par :
+       - le slug "contact" ;
+       - le template page-contact.php.
 
-       L'ID 10 est conservé temporairement
-       pour ton environnement local.
-
-       Après migration, il pourra être supprimé.
+       L'ancienne condition is_page(10)
+       n'est plus utilisée.
     */
 
     if (
-        is_page(10) ||
         is_page('contact') ||
         is_page_template('page-contact.php')
     ) {
 
+        // Animation typographique de la page Contact.
         miettes_enqueue_script(
             'miettes-contact-slot',
             'contact-slot.js'
@@ -200,8 +302,11 @@ function miettes_enqueue_assets() {
    ========================================================== */
 
 /**
- * WordPress appelle cette fonction au moment
- * de préparer les ressources du thème.
+ * Enregistre notre fonction de chargement
+ * sur le hook officiel wp_enqueue_scripts.
+ *
+ * WordPress appelle automatiquement cette fonction
+ * pendant la préparation des ressources de la page.
  */
 add_action(
     'wp_enqueue_scripts',
