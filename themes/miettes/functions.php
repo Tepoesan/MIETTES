@@ -178,6 +178,36 @@ function miettes_enqueue_assets() {
         );
     }
 
+    /* ------------------------------------------------------
+    A.2 BIS — FOOTER CSS
+    ------------------------------------------------------
+
+    Styles communs du pied de page MIETTES.
+
+    Chargés sur toutes les pages, car le footer
+    est un composant global du thème.
+    */
+
+    $footer_css_path = get_theme_file_path(
+        '/assets/css/footer.css'
+    );
+
+    $footer_css_exists = is_file($footer_css_path);
+
+    if ($footer_css_exists) {
+
+        // Le footer utilise les variables définies dans base.css.
+        $footer_dependencies = $base_css_exists
+            ? array('miettes-base')
+            : array();
+
+        wp_enqueue_style(
+            'miettes-footer',
+            get_theme_file_uri('/assets/css/footer.css'),
+            $footer_dependencies,
+            filemtime($footer_css_path)
+        );
+    }
 
     /* ------------------------------------------------------
        A.3 — STYLE CSS PRINCIPAL

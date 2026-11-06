@@ -1,0 +1,159 @@
+/* ==========================================
+   MIETTES — FOOTER
+   Styles regroupés depuis style.css
+   ========================================== */
+
+/* ==========================================
+   08 — FOOTER
+   ==========================================
+
+   Pied de page sobre, séparé du contenu
+   par une ligne fine.
+*/
+
+.site-footer {
+    padding: 28px 5%;
+    border-top: 1px solid var(--color-greige);
+    text-align: center;
+}
+
+.site-footer p {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
+
+/* ==========================================================
+   FOOTER — SIGNATURE MIETTES & DRAPEAU FRANÇAIS
+   ========================================================== */
+
+/* Répartit la signature à gauche et le drapeau à droite. */
+.site-footer__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 38px 5vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Typographie sobre de la signature. */
+.site-footer__copyright {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+}
+
+/* Regroupe le drapeau et le nom du pays. */
+.site-footer__origin {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.site-footer__country {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+}
+
+/* Drapeau français : trois bandes verticales. */
+.site-footer__flag {
+    display: flex;
+    width: 24px;
+    height: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.site-footer__flag span {
+    flex: 1;
+}
+
+.site-footer__flag .flag-blue {
+    background-color: #002395;
+}
+
+.site-footer__flag .flag-white {
+    background-color: #ffffff;
+}
+
+.site-footer__flag .flag-red {
+    background-color: #ed2939;
+}
+
+/* Sur mobile, les deux éléments passent l'un sous l'autre. */
+@media (max-width: 600px) {
+    .site-footer__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .site-footer__copyright {
+        line-height: 1.8;
+    }
+}
+
+
+
+/* ==========================================================
+   MIETTES — NAVIGATION DU FOOTER
+   ========================================================== */
+
+/*
+ * Organisation des liens secondaires.
+ * Flexbox permet de les disposer horizontalement.
+ */
+.site-footer__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+}
+
+/*
+ * Liens discrets, cohérents avec le design
+ * minimaliste de MIETTES.
+ */
+.site-footer__link {
+    color: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.site-footer__link:hover {
+    opacity: 0.55;
+}
+
+.site-footer__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+}
+
+/*
+ * Adaptation pour les petits écrans.
+ * Les éléments du footer passent en colonne.
+ */
+@media (max-width: 768px) {
+
+    .site-footer__inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        text-align: center;
+    }
+
+    .site-footer__nav {
+        gap: 12px 20px;
+    }
+
+}
