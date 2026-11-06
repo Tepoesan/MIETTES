@@ -159,3 +159,26 @@ body.admin-bar .site-header {
     outline: 2px solid var(--color-gold);
     outline-offset: 5px;
 }
+
+/* ==========================================
+   HEADER — RESPONSIVE MOBILE
+   ==========================================
+
+   Ajustements spécifiques aux écrans
+   de 600 px de largeur ou moins.
+*/
+
+@media (max-width: 600px) {
+
+    /* Header plus compact sur téléphone. */
+    .site-header {
+        min-height: 48px;
+        padding: 10px 6%;
+    }
+
+    /* Logo adapté aux petits écrans. */
+    .site-logo {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+    }
+}
