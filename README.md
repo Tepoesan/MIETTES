@@ -1,54 +1,56 @@
 # MIETTES — Maison de Pain Perdu
 
-**Rien ne se perd. Tout se désire.**
+**Rien ne se perd. Tout se désire.**  
+*Nothing is wasted. Everything is desired.*
 
-MIETTES est un projet de site vitrine fictif pour une maison de pain perdu haut de gamme, imaginée autour d'une identité visuelle minimaliste, brute et éditoriale.
+MIETTES is a fictional showcase website for a premium French toast house, built around a minimalist, raw, and editorial visual identity.
 
-Le projet explore la création d'une expérience web immersive à travers WordPress, un thème développé sur mesure et des interactions JavaScript.
+The project explores the creation of an immersive web experience using WordPress, a fully custom-developed theme, and interactive JavaScript animations.
 
 ## Concept
 
-MIETTES revisite le pain perdu comme une création gastronomique contemporaine.
+MIETTES reimagines traditional French toast as a contemporary culinary creation.
 
-L'identité graphique repose sur une esthétique brutaliste : contrastes noir et blanc, typographie affirmée, photographie culinaire et animations discrètes.
+Its visual identity draws inspiration from brutalist design, combining bold black-and-white contrasts, expressive typography, food photography, and subtle animations.
 
-**Signature :** Le goût. Sans compromis.
+**Brand signature:** *Le goût. Sans compromis.*  
+*Taste. Without compromise.*
 
 ## Technologies
 
-- **CMS :** WordPress
-- **Back-end :** PHP 8.3
-- **Front-end :** HTML5, CSS3, JavaScript natif
-- **Base de données :** MySQL 8.4
-- **Environnement :** Docker Compose
-- **Versionnement :** Git
-- **Développement :** VS Code, Composer (stubs WordPress)
+- **CMS:** WordPress
+- **Back-end:** PHP 8.3
+- **Front-end:** HTML5, CSS3, Vanilla JavaScript
+- **Database:** MySQL 8.4
+- **Development environment:** Docker Compose
+- **Version control:** Git
+- **Development tools:** VS Code, Composer (WordPress stubs)
 
-## Fonctionnalités
+## Features
 
-### Accueil
-- Hero éditorial
-- Collection de créations culinaires
-- Galerie horizontale animée au défilement
-- Manifeste avec apparition progressive des textes
+### Homepage
+- Editorial hero section
+- Curated collection of culinary creations
+- Scroll-driven horizontal gallery
+- Animated manifesto with progressive text reveals
 
 ### La Maison
-- Présentation de l'univers de la marque
-- Galerie photographique
-- Animations au défilement
+- Introduction to the brand's identity and philosophy
+- Editorial photography gallery
+- Scroll-triggered visual animations
 
 ### Contact
-- Hero cinématographique
-- Animation typographique inspirée d'une machine à sous
-- Effet de reflet
-- Composition éditoriale
+- Cinematic hero section
+- Slot-machine-inspired typography animation
+- Reflection effect
+- Editorial layout and composition
 
-### Accessibilité et responsive
-- Adaptations aux écrans mobiles
-- Navigation sémantique
-- Prise en compte de `prefers-reduced-motion`
+### Accessibility and Responsive Design
+- Responsive layouts for mobile devices
+- Semantic navigation
+- Support for `prefers-reduced-motion`
 
-## Architecture
+## Project Structure
 
 ```text
 MIETTES/
@@ -79,73 +81,76 @@ MIETTES/
         └── style.css
 ```
 
-## Installation locale
+## Local Installation
 
-### Prérequis
+### Prerequisites
 
-- Docker Desktop avec Docker Compose
+- Docker Desktop with Docker Compose
 - Git
 
-### 1. Cloner le dépôt
+### 1. Clone the Repository
 
 ```bash
-git clone <URL_DU_DEPOT>
+git clone https://github.com/Tepoesan/MIETTES.git
 cd MIETTES
 ```
 
-### 2. Configurer l'environnement
+### 2. Configure the Environment
 
-Copier `.env.example` vers `.env`.
+Copy `.env.example` to `.env`.
 
-Remplacer les valeurs `CHANGE_ME` par des mots de passe personnels.
+Replace the `CHANGE_ME` placeholders with your own secure passwords.
 
-Ne jamais publier le fichier `.env`.
+Never commit or publish the `.env` file.
 
-### 3. Démarrer Docker
+### 3. Start Docker
 
 ```bash
 docker compose up -d
 ```
 
-### 4. Accéder au site
+### 4. Access the Website
 
-Ouvrir :
+Open the following address in your browser:
 
 http://localhost:8080/
 
-Lors de la première installation, terminer la configuration WordPress et activer le thème **MIETTES** dans l'administration.
+On first launch, complete the WordPress installation process and activate the **MIETTES** theme from the WordPress administration dashboard.
 
-**Important :** le dépôt contient le thème et sa configuration Docker, mais pas encore d'export de la base de données. Les pages et contenus WordPress doivent donc être recréés ou importés séparément.
+**Important:** This repository contains the custom WordPress theme and its Docker configuration, but does not include a database export. WordPress pages and content must therefore be recreated or imported separately.
 
-## Architecture CSS
+## CSS Architecture
 
-Le thème utilise une architecture CSS modulaire.
+The theme follows a modular CSS architecture designed to improve readability, maintainability, and separation of concerns.
 
-Les styles sont répartis selon leurs responsabilités : base commune, navigation, pied de page, accueil, collection, manifeste et pages spécifiques.
+Stylesheets are organized according to their responsibilities, including global styles, navigation, footer, homepage, collection, manifesto, and individual page layouts.
 
-Le chargement des ressources est géré dans `functions.php` à l'aide des fonctions natives de WordPress.
+Asset loading is managed through `functions.php` using native WordPress functions.
 
-Les feuilles de style propres à certaines pages sont chargées conditionnellement.
+Page-specific stylesheets are conditionally loaded to avoid unnecessary resources.
 
 ## Animations
 
-Les interactions sont développées en JavaScript natif, sans bibliothèque d'animation externe.
+All interactions are developed using Vanilla JavaScript, without external animation libraries.
 
-Principaux scripts :
+Main animation scripts:
 
 - `collection-scroll.js`
 - `manifesto-scroll.js`
 - `maison-scroll.js`
 - `contact-slot.js`
 
-## Statut
+These scripts provide scroll-driven interactions, progressive content reveals, photographic transitions, and animated typography.
 
-Développement du thème et refactorisation CSS terminés.
+## Project Status
 
-Préparation de la documentation, de la reproductibilité de l'installation et de la publication GitHub.
+- Custom WordPress theme development completed.
+- Modular CSS refactoring completed.
+- Source code published on GitHub.
+- Documentation and installation reproducibility improvements ongoing.
 
-## Auteur
+## Author
 
 **Tepoe'San**
 
-Projet personnel de développement web et de direction artistique.
+Personal project focused on web development, creative front-end experiences, and art direction.
