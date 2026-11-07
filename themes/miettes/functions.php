@@ -431,3 +431,58 @@ add_action(
     'wp_enqueue_scripts',
     'miettes_enqueue_assets'
 );
+
+/**
+ * MIETTES — Support des fonctionnalités WordPress.
+ *
+ * Confie à WordPress la génération de la balise <title>
+ * dans l'en-tête HTML.
+ */
+function miettes_theme_setup() {
+    add_theme_support('title-tag');
+}
+
+add_action('after_setup_theme', 'miettes_theme_setup');
+
+/* ==========================================================
+   05 — SEO : TITRES DES PAGES
+   ========================================================== */
+/**
+ * MIETTES — Personnalisation des titres SEO.
+ *
+ * Définit un titre spécifique pour chaque page.
+ * Supprime le nom du site ajouté automatiquement
+ * par WordPress afin d'éviter les doublons.
+ */
+function miettes_seo_document_title($title) {
+
+    if (is_front_page()) {
+
+        $title['title'] = 'MIETTES — Maison de Pain Perdu à Paris';
+
+    } elseif (is_page('la-maison')) {
+
+        $title['title'] = 'La Maison — L’univers MIETTES';
+
+    } elseif (is_page('contact')) {
+
+        $title['title'] = 'Contact — MIETTES';
+
+    } elseif (is_page('politique-de-confidentialite')) {
+
+        $title['title'] = 'Politique de confidentialité — MIETTES';
+
+    } else {
+
+        // Conserve les titres WordPress pour les autres pages.
+        return $title;
+    }
+
+    // Évite l'ajout automatique de « – MIETTES ».
+    unset($title['site']);
+    unset($title['tagline']);
+
+    return $title;
+}
+
+add_filter('document_title_parts', 'miettes_seo_document_title');
