@@ -1,0 +1,185 @@
+
+/* ==========================================================
+   MIETTES — HOME.CSS
+   ==========================================================
+
+   Styles spécifiques à la page d'accueil.
+
+   SECTIONS :
+   01 — HERO
+   02 — COLLECTION
+   03 — SIGNATURE
+   04 — MANIFESTO
+   05 — RESPONSIVE
+   06 — ACCESSIBILITÉ
+
+   Direction artistique :
+   - minimalisme brutaliste ;
+   - typographies éditoriales ;
+   - matières brutes ;
+   - animations cinématiques maîtrisées.
+
+   Les animations sont pilotées par JavaScript.
+   ========================================================== */
+
+
+
+/* ==========================================================
+   01 — HERO MIETTES
+   ==========================================================
+
+   Première section de la page d'accueil.
+
+   Composition :
+   - signature de la maison ;
+   - titre monumental MIETTES ;
+   - photographie pleine largeur ;
+   - informations sous la photographie.
+
+   Les styles desktop et mobile sont regroupés
+   pour faciliter la maintenance.
+   ========================================================== */
+
+
+/* ----------------------------------------------------------
+   01.1 — CONTENEUR PRINCIPAL
+   ---------------------------------------------------------- */
+
+.hero {
+    /* Organisation verticale des éléments. */
+    display: flex;
+    flex-direction: column;
+
+    /* Occupe toute la largeur disponible. */
+    width: 100%;
+
+    /* Espace entre les différents blocs. */
+    gap: 48px;
+
+    /* Respiration au-dessus du titre. */
+    padding-top: 80px;
+}
+
+
+/* ----------------------------------------------------------
+   01.2 — TITRE ET SIGNATURE
+   ---------------------------------------------------------- */
+
+.hero-heading {
+    /* Centre la composition typographique. */
+    text-align: center;
+
+    /* Conserve une marge sur les côtés. */
+    padding-inline: 5%;
+}
+
+.hero-eyebrow {
+    display: block;
+
+    margin-bottom: 32px;
+
+    font-size: 10px;
+    letter-spacing: 0.3em;
+}
+
+.hero-heading h1 {
+    /* Titre monumental, adapté à la largeur. */
+    font-size: clamp(5rem, 15vw, 13rem);
+
+    font-weight: 400;
+    letter-spacing: -0.075em;
+}
+
+/* Signature sous le titre MIETTES. */
+.hero-signature {
+    margin-top: 28px;
+
+    font-size: 11px;
+    letter-spacing: 0.22em;
+
+    text-transform: uppercase;
+}
+
+
+/* ----------------------------------------------------------
+   01.3 — PHOTOGRAPHIE PLEINE LARGEUR
+   ---------------------------------------------------------- */
+
+.hero-visual {
+    /* La photographie touche les bords. */
+    width: 100%;
+
+    margin: 0;
+    overflow: hidden;
+
+    /* Couleur visible pendant le chargement. */
+    background-color: var(--color-stone);
+}
+
+.hero-image {
+    /* Évite l'espace sous une image inline. */
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+/* ----------------------------------------------------------
+   01.4 — INFORMATIONS SOUS LE HERO
+   ---------------------------------------------------------- */
+
+.hero-bottom {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    /* Même alignement que le titre. */
+    padding-inline: 5%;
+
+    font-size: 10px;
+    letter-spacing: 0.16em;
+}
+
+.hero-bottom a {
+    /* Soulignement discret façon éditorial. */
+    border-bottom: 1px solid currentColor;
+
+    padding-bottom: 6px;
+}
+
+
+/* ==========================================================
+   02 — RESPONSIVE HERO
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .hero {
+        /* Moins d'espace sur téléphone. */
+        gap: 32px;
+        padding-top: 64px;
+    }
+
+    .hero-heading,
+    .hero-bottom {
+        padding-inline: 6%;
+    }
+
+    .hero-eyebrow {
+        font-size: 9px;
+    }
+
+    .hero-heading h1 {
+        font-size: clamp(3.2rem, 15vw, 6rem);
+    }
+
+    .hero-bottom {
+        /* Les informations passent en colonne. */
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

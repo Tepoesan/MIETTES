@@ -249,6 +249,24 @@ function miettes_enqueue_assets() {
         $css_version
     );
 
+    /* ------------------------------------------------------
+    A.3 — CSS SPÉCIFIQUE À L'ACCUEIL
+    ------------------------------------------------------ */
+
+    if (is_front_page()) {
+
+        $home_css_path = get_theme_file_path('/assets/css/home.css');
+
+        if (is_file($home_css_path)) {
+
+            wp_enqueue_style(
+                'miettes-home',
+                get_theme_file_uri('/assets/css/home.css'),
+                array('miettes-style'),
+                filemtime($home_css_path)
+            );
+        }
+    }
 
     /* ------------------------------------------------------
        B — PAGE D'ACCUEIL

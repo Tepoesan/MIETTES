@@ -60,165 +60,14 @@ Text Domain: miettes
 }
 
 /* ==========================================
-   05 — HERO MIETTES
-   ==========================================
-
-   Première section visible du site.
-
-   Composition :
-   - signature de la maison ;
-   - grand titre MIETTES ;
-   - photographie signature ;
-   - informations de collection.
-*/
-
-.hero {
-    display: flex;
-    flex-direction: column;
-
-    /* Espacement entre les blocs du hero. */
-    gap: 48px;
-}
-
-/* Centre le titre et sa signature. */
-.hero-heading {
-    text-align: center;
-}
-
-/*
- * Petite mention au-dessus du titre :
- * MAISON DE PAIN PERDU · PARIS
- */
-.hero-eyebrow {
-    display: block;
-    margin-bottom: 32px;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-}
-
-/*
- * Titre principal de la maison.
- *
- * Plus imposant que les autres titres
- * pour donner un aspect haute couture.
- */
-.hero-heading h1 {
-    font-size: clamp(5rem, 15vw, 13rem);
-    font-weight: 400;
-    letter-spacing: -0.075em;
-}
-
-/*
- * Signature :
- * Rien ne se perd. Tout se désire.
- */
-.hero-signature {
-    margin-top: 28px;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-}
-
-/* ==========================================
-   06 — PHOTOGRAPHIE SIGNATURE
-   ==========================================
-
-   La photographie présente le pain perdu
-   comme une pièce de joaillerie.
-
-   L'image conserve ses proportions naturelles
-   et ne doit pas laisser de bande vide dessous.
-*/
-
-.hero-visual {
-    width: 100%;
-
-    /* Empêche tout débordement éventuel. */
-    overflow: hidden;
-
-    /* Couleur de secours pendant le chargement. */
-    background-color: var(--color-stone);
-}
-
-.hero-image {
-    display: block;
-    width: 100%;
-
-    /* Conserve le ratio original de la photographie. */
-    height: auto;
-}
-
-/* ==========================================
-   07 — INFORMATIONS SOUS LE HERO
-   ==========================================
-
-   Mise en page inspirée des catalogues de luxe.
-
-   À gauche : numéro de la création.
-   À droite : lien vers la collection.
-*/
-
-.hero-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-
-    font-size: 10px;
-    letter-spacing: 0.16em;
-}
-
-/*
- * Soulignement fin du lien.
- * Pas de bouton massif : on conserve
- * une navigation discrète et élégante.
- */
-.hero-bottom a {
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 6px;
-}
-
-/* ==========================================
-   09 — RESPONSIVE MOBILE
-   ==========================================
-
-   Adaptations pour les écrans de 600 px
-   de largeur ou moins.
-
-   Objectifs :
-   - conserver un header très fin ;
-   - réduire les marges ;
-   - adapter la taille du titre ;
-   - empiler les informations du hero.
-*/
+   09 — RESPONSIVE MOBILE GLOBAL
+   ========================================== */
 
 @media (max-width: 600px) {
 
-    /* Titres adaptés aux petits écrans. */
+    /* Adaptation des titres sur petits écrans. */
     .site-main h1 {
         font-size: clamp(3.2rem, 15vw, 6rem);
-    }
-
-    /* Espacements réduits dans le hero. */
-    .hero {
-        gap: 32px;
-    }
-
-    .hero-eyebrow {
-        font-size: 9px;
-    }
-
-    .hero-heading h1 {
-        font-size: clamp(3.2rem, 15vw, 6rem);
-    }
-
-    /*
-     * Les informations passent sur deux lignes
-     * pour éviter les débordements horizontaux.
-     */
-    .hero-bottom {
-        flex-direction: column;
-        align-items: flex-start;
     }
 }
 
@@ -237,34 +86,6 @@ Text Domain: miettes
     html {
         scroll-behavior: auto;
     }
-}
-
-
-/* ==========================================
-   11 — HERO PLEINE LARGEUR
-   ========================================== */
-
-/* Le titre garde des marges, mais l'image touche les bords. */
-.hero {
-    width: 100%;
-    padding-top: 80px;
-}
-
-.hero-heading,
-.hero-bottom {
-    padding-inline: 5%;
-}
-
-.hero-visual {
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-.hero-image {
-    display: block;
-    width: 100%;
-    height: auto;
 }
 
 /* ==========================================
@@ -394,13 +215,17 @@ Text Domain: miettes
    13 — PETITS ÉCRANS ET MOUVEMENT RÉDUIT
    ========================================== */
 
+/* Responsive spécifique à la Collection. */
 @media (max-width: 600px) {
-    .hero { padding-top: 64px; }
-    .hero-heading,
-    .hero-bottom,
-    .collection { padding-inline: 6%; }
-    .collection { margin-top: 80px; }
-    .collection-intro h2 { font-size: clamp(38px, 10vw, 64px); }
+
+    .collection {
+        padding-inline: 6%;
+        margin-top: 80px;
+    }
+
+    .collection-intro h2 {
+        font-size: clamp(38px, 10vw, 64px);
+    }
 }
 
 /* En mode réduit et sur mobile, on revient à un rail natif. */
