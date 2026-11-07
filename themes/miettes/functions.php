@@ -2,29 +2,29 @@
 <?php
 /**
  * ==========================================================
- * MIETTES — FONCTIONS DU THÈME WORDPRESS
+ * MIETTES â€” FONCTIONS DU THÃˆME WORDPRESS
  * ==========================================================
  *
- * Gestion centralisée des ressources CSS et JavaScript.
+ * Gestion centralisÃ©e des ressources CSS et JavaScript.
  *
  * OBJECTIFS :
  * - Organiser les feuilles CSS en composants.
  * - Respecter l'ordre de chargement des styles.
- * - Charger les animations uniquement si nécessaire.
- * - Éviter les identifiants WordPress propres à une installation.
- * - Vérifier l'existence des fichiers avant leur chargement.
- * - Actualiser automatiquement le cache après modification.
+ * - Charger les animations uniquement si nÃ©cessaire.
+ * - Ã‰viter les identifiants WordPress propres Ã  une installation.
+ * - VÃ©rifier l'existence des fichiers avant leur chargement.
+ * - Actualiser automatiquement le cache aprÃ¨s modification.
  *
  * ARCHITECTURE CSS :
  *
  * assets/css/base.css
- *   Variables, reset, styles globaux et accessibilité.
+ *   Variables, reset, styles globaux et accessibilitÃ©.
  *
  * assets/css/header.css
  *   Header, logo, navigation et barre admin WordPress.
  *
  * style.css
- *   En-tête du thème et composants encore à migrer.
+ *   En-tÃªte du thÃ¨me et composants encore Ã  migrer.
  *   Conserve temporairement les adaptations responsive.
  *
  * JAVASCRIPT :
@@ -42,20 +42,20 @@
 
 
 /* ==========================================================
-   01 — FONCTION UTILITAIRE JAVASCRIPT
+   01 â€” FONCTION UTILITAIRE JAVASCRIPT
    ========================================================== */
 
 /**
- * Charge un fichier JavaScript du thème.
+ * Charge un fichier JavaScript du thÃ¨me.
  *
  * @param string $handle   Identifiant unique du script.
  * @param string $filename Nom du fichier JavaScript.
  *
- * Les scripts sont recherchés dans le dossier /js/.
+ * Les scripts sont recherchÃ©s dans le dossier /js/.
  */
 function miettes_enqueue_script($handle, $filename) {
 
-    // Vérifie le type et empêche les chemins arbitraires.
+    // VÃ©rifie le type et empÃªche les chemins arbitraires.
     if (
         !is_string($filename) ||
         basename($filename) !== $filename
@@ -78,8 +78,8 @@ function miettes_enqueue_script($handle, $filename) {
         '/js/' . $filename
     );
 
-    // Version basée sur la dernière modification.
-    // Permet au navigateur de récupérer les changements.
+    // Version basÃ©e sur la derniÃ¨re modification.
+    // Permet au navigateur de rÃ©cupÃ©rer les changements.
     $version = filemtime($file_path);
 
     // Charge le script dans le pied de page.
@@ -96,17 +96,17 @@ function miettes_enqueue_script($handle, $filename) {
 
 
 /* ==========================================================
-   02 — CHARGEMENT DES RESSOURCES
+   02 â€” CHARGEMENT DES RESSOURCES
    ========================================================== */
 
 /**
  * Charge les feuilles CSS et les scripts JavaScript
- * selon la page WordPress actuellement affichée.
+ * selon la page WordPress actuellement affichÃ©e.
  */
 function miettes_enqueue_assets() {
 
     /* ------------------------------------------------------
-       A — ARCHITECTURE CSS
+       A â€” ARCHITECTURE CSS
        ------------------------------------------------------
 
        ORDRE DE CHARGEMENT :
@@ -115,18 +115,18 @@ function miettes_enqueue_assets() {
           Design system, reset et styles globaux.
 
        2. header.css
-          En-tête, logo et navigation.
+          En-tÃªte, logo et navigation.
 
        3. style.css
           Composants restants et surcharges responsive.
 
-       Les dépendances WordPress garantissent cet ordre
-       lorsque les fichiers concernés existent.
+       Les dÃ©pendances WordPress garantissent cet ordre
+       lorsque les fichiers concernÃ©s existent.
     */
 
 
     /* ------------------------------------------------------
-       A.1 — BASE CSS
+       A.1 â€” BASE CSS
        ------------------------------------------------------ */
 
     // Chemin physique de la feuille CSS de base.
@@ -134,12 +134,12 @@ function miettes_enqueue_assets() {
         '/assets/css/base.css'
     );
 
-    // Vérifie la présence du fichier.
+    // VÃ©rifie la prÃ©sence du fichier.
     $base_css_exists = is_file($base_css_path);
 
     if ($base_css_exists) {
 
-        // Charge les fondations graphiques du thème.
+        // Charge les fondations graphiques du thÃ¨me.
         wp_enqueue_style(
             'miettes-base',
             get_theme_file_uri('/assets/css/base.css'),
@@ -150,7 +150,7 @@ function miettes_enqueue_assets() {
 
 
     /* ------------------------------------------------------
-       A.2 — HEADER CSS
+       A.2 â€” HEADER CSS
        ------------------------------------------------------ */
 
     // Chemin physique du composant header.
@@ -158,12 +158,12 @@ function miettes_enqueue_assets() {
         '/assets/css/header.css'
     );
 
-    // Vérifie que le fichier a bien été créé.
+    // VÃ©rifie que le fichier a bien Ã©tÃ© crÃ©Ã©.
     $header_css_exists = is_file($header_css_path);
 
     if ($header_css_exists) {
 
-        // Le header dépend de base.css uniquement
+        // Le header dÃ©pend de base.css uniquement
         // lorsque cette feuille est disponible.
         $header_dependencies = $base_css_exists
             ? array('miettes-base')
@@ -179,13 +179,13 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
-    A.2 BIS — FOOTER CSS
+    A.2 BIS â€” FOOTER CSS
     ------------------------------------------------------
 
     Styles communs du pied de page MIETTES.
 
-    Chargés sur toutes les pages, car le footer
-    est un composant global du thème.
+    ChargÃ©s sur toutes les pages, car le footer
+    est un composant global du thÃ¨me.
     */
 
     $footer_css_path = get_theme_file_path(
@@ -196,7 +196,7 @@ function miettes_enqueue_assets() {
 
     if ($footer_css_exists) {
 
-        // Le footer utilise les variables définies dans base.css.
+        // Le footer utilise les variables dÃ©finies dans base.css.
         $footer_dependencies = $base_css_exists
             ? array('miettes-base')
             : array();
@@ -210,27 +210,27 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
-       A.3 — STYLE CSS PRINCIPAL
+       A.3 â€” STYLE CSS PRINCIPAL
        ------------------------------------------------------
 
-       WordPress utilise également style.css
-       pour identifier le thème.
+       WordPress utilise Ã©galement style.css
+       pour identifier le thÃ¨me.
 
        Pendant la migration, ce fichier conserve
-       les composants qui n'ont pas encore été
-       déplacés vers assets/css/.
+       les composants qui n'ont pas encore Ã©tÃ©
+       dÃ©placÃ©s vers assets/css/.
     */
 
     // Chemin physique de style.css.
     $css_path = get_stylesheet_directory()
         . '/style.css';
 
-    // Actualise la version après chaque modification.
+    // Actualise la version aprÃ¨s chaque modification.
     $css_version = is_file($css_path)
         ? filemtime($css_path)
         : wp_get_theme()->get('Version');
 
-    // Prépare les dépendances dans le bon ordre.
+    // PrÃ©pare les dÃ©pendances dans le bon ordre.
     $css_dependencies = array();
 
     if ($base_css_exists) {
@@ -241,7 +241,7 @@ function miettes_enqueue_assets() {
         $css_dependencies[] = 'miettes-header';
     }
 
-    // Charge la feuille principale après les composants.
+    // Charge la feuille principale aprÃ¨s les composants.
     wp_enqueue_style(
         'miettes-style',
         get_stylesheet_uri(),
@@ -250,7 +250,7 @@ function miettes_enqueue_assets() {
     );
 
     /* ------------------------------------------------------
-    A.3 — CSS SPÉCIFIQUE À L'ACCUEIL
+    A.3 â€” CSS SPÃ‰CIFIQUE Ã€ L'ACCUEIL
     ------------------------------------------------------ */
 
     if (is_front_page()) {
@@ -269,7 +269,7 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
-       A.4 — COLLECTION CINEMATIQUE
+       A.4 â€” COLLECTION CINEMATIQUE
        ------------------------------------------------------ */
     if (is_front_page()) {
         $collection_css_path = get_theme_file_path(
@@ -286,7 +286,7 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
-       A.5 — MANIFESTE
+       A.5 â€” MANIFESTE
        ------------------------------------------------------ */
     if (is_front_page()) {
         $manifesto_css_path = get_theme_file_path(
@@ -302,7 +302,7 @@ function miettes_enqueue_assets() {
         }
     }
     /* ------------------------------------------------------
-       A.6 — CSS LA MAISON
+       A.6 â€” CSS LA MAISON
        ------------------------------------------------------ */
     if (
         is_page('la-maison') ||
@@ -321,25 +321,25 @@ function miettes_enqueue_assets() {
         }
     }
     /* ------------------------------------------------------
-       B — PAGE D'ACCUEIL
+       B â€” PAGE D'ACCUEIL
        ------------------------------------------------------
 
-       is_front_page() détecte la page d'accueil
-       configurée dans les réglages WordPress.
+       is_front_page() dÃ©tecte la page d'accueil
+       configurÃ©e dans les rÃ©glages WordPress.
 
-       Les animations suivantes ne sont chargées
+       Les animations suivantes ne sont chargÃ©es
        que sur cette page.
     */
 
     if (is_front_page()) {
 
-        // Défilement horizontal de la collection.
+        // DÃ©filement horizontal de la collection.
         miettes_enqueue_script(
             'miettes-collection-scroll',
             'collection-scroll.js'
         );
 
-        // Apparition animée du manifeste.
+        // Apparition animÃ©e du manifeste.
         miettes_enqueue_script(
             'miettes-manifesto-scroll',
             'manifesto-scroll.js'
@@ -348,14 +348,14 @@ function miettes_enqueue_assets() {
 
 
     /* ------------------------------------------------------
-       C — PAGE LA MAISON
+       C â€” PAGE LA MAISON
        ------------------------------------------------------
 
-       Détection par :
+       DÃ©tection par :
        - le slug "la-maison" ;
        - le template page-la-maison.php.
 
-       Aucun identifiant WordPress local n'est utilisé.
+       Aucun identifiant WordPress local n'est utilisÃ©.
     */
 
     if (
@@ -363,7 +363,7 @@ function miettes_enqueue_assets() {
         is_page_template('page-la-maison.php')
     ) {
 
-        // Animations au défilement de La Maison.
+        // Animations au dÃ©filement de La Maison.
         miettes_enqueue_script(
             'miettes-maison-scroll',
             'maison-scroll.js'
@@ -372,7 +372,7 @@ function miettes_enqueue_assets() {
 
 
     /* ------------------------------------------------------
-       CSS CONTACT — CHARGEMENT CONDITIONNEL
+       CSS CONTACT â€” CHARGEMENT CONDITIONNEL
        ------------------------------------------------------ */
     if (
         is_page('contact') ||
@@ -391,15 +391,15 @@ function miettes_enqueue_assets() {
         }
     }
     /* ------------------------------------------------------
-       D — PAGE CONTACT
+       D â€” PAGE CONTACT
        ------------------------------------------------------
 
-       Détection par :
+       DÃ©tection par :
        - le slug "contact" ;
        - le template page-contact.php.
 
        L'ancienne condition is_page(10)
-       n'est plus utilisée.
+       n'est plus utilisÃ©e.
     */
 
     if (
@@ -417,7 +417,7 @@ function miettes_enqueue_assets() {
 
 
 /* ==========================================================
-   03 — ACTIVATION WORDPRESS
+   03 â€” ACTIVATION WORDPRESS
    ========================================================== */
 
 /**
@@ -425,7 +425,7 @@ function miettes_enqueue_assets() {
  * sur le hook officiel wp_enqueue_scripts.
  *
  * WordPress appelle automatiquement cette fonction
- * pendant la préparation des ressources de la page.
+ * pendant la prÃ©paration des ressources de la page.
  */
 add_action(
     'wp_enqueue_scripts',
@@ -433,10 +433,10 @@ add_action(
 );
 
 /**
- * MIETTES — Support des fonctionnalités WordPress.
+ * MIETTES â€” Support des fonctionnalitÃ©s WordPress.
  *
- * Confie à WordPress la génération de la balise <title>
- * dans l'en-tête HTML.
+ * Confie Ã  WordPress la gÃ©nÃ©ration de la balise <title>
+ * dans l'en-tÃªte HTML.
  */
 function miettes_theme_setup() {
     add_theme_support('title-tag');
@@ -445,32 +445,32 @@ function miettes_theme_setup() {
 add_action('after_setup_theme', 'miettes_theme_setup');
 
 /* ==========================================================
-   05 — SEO : TITRES DES PAGES
+   05 â€” SEO : TITRES DES PAGES
    ========================================================== */
 /**
- * MIETTES — Personnalisation des titres SEO.
+ * MIETTES â€” Personnalisation des titres SEO.
  *
- * Définit un titre spécifique pour chaque page.
- * Supprime le nom du site ajouté automatiquement
- * par WordPress afin d'éviter les doublons.
+ * DÃ©finit un titre spÃ©cifique pour chaque page.
+ * Supprime le nom du site ajoutÃ© automatiquement
+ * par WordPress afin d'Ã©viter les doublons.
  */
 function miettes_seo_document_title($title) {
 
     if (is_front_page()) {
 
-        $title['title'] = 'MIETTES — Maison de Pain Perdu à Paris';
+        $title['title'] = 'MIETTES â€” Maison de Pain Perdu Ã  Paris';
 
     } elseif (is_page('la-maison')) {
 
-        $title['title'] = 'La Maison — L’univers MIETTES';
+        $title['title'] = 'La Maison â€” Lâ€™univers MIETTES';
 
     } elseif (is_page('contact')) {
 
-        $title['title'] = 'Contact — MIETTES';
+        $title['title'] = 'Contact â€” MIETTES';
 
     } elseif (is_page('politique-de-confidentialite')) {
 
-        $title['title'] = 'Politique de confidentialité — MIETTES';
+        $title['title'] = 'Politique de confidentialitÃ© â€” MIETTES';
 
     } else {
 
@@ -478,7 +478,7 @@ function miettes_seo_document_title($title) {
         return $title;
     }
 
-    // Évite l'ajout automatique de « – MIETTES ».
+    // Ã‰vite l'ajout automatique de Â« â€“ MIETTES Â».
     unset($title['site']);
     unset($title['tagline']);
 
@@ -488,22 +488,22 @@ function miettes_seo_document_title($title) {
 add_filter('document_title_parts', 'miettes_seo_document_title');
 
 /* ==========================================================
-   06 — SEO : MÉTA-DESCRIPTIONS
+   06 â€” SEO : MÃ‰TA-DESCRIPTIONS
    ========================================================== */
 /**
- * Ajoute une méta-description spécifique aux pages MIETTES.
- * Le contenu est échappé pour sécuriser le HTML.
+ * Ajoute une mÃ©ta-description spÃ©cifique aux pages MIETTES.
+ * Le contenu est Ã©chappÃ© pour sÃ©curiser le HTML.
  */
 function miettes_seo_meta_description() {
     $description = '';
     if (is_front_page()) {
-        $description = 'Découvrez MIETTES, maison parisienne de pain perdu réinventé. Une expérience gastronomique singulière entre tradition et audace.';
+        $description = 'DÃ©couvrez MIETTES, maison parisienne de pain perdu rÃ©inventÃ©. Une expÃ©rience gastronomique singuliÃ¨re entre tradition et audace.';
     } elseif (is_page('la-maison')) {
-        $description = 'Entrez dans l’univers de MIETTES. Une maison où le pain perdu devient une création gastronomique, entre savoir-faire et liberté.';
+        $description = 'Entrez dans lâ€™univers de MIETTES. Une maison oÃ¹ le pain perdu devient une crÃ©ation gastronomique, entre savoir-faire et libertÃ©.';
     } elseif (is_page('contact')) {
-        $description = 'Contactez MIETTES, maison de pain perdu à Paris. Une question, une demande ou simplement l’envie de découvrir notre univers ?';
+        $description = 'Contactez MIETTES, maison de pain perdu Ã  Paris. Une question, une demande ou simplement lâ€™envie de dÃ©couvrir notre univers ?';
     } elseif (is_page('politique-de-confidentialite')) {
-        $description = 'Consultez la politique de confidentialité de MIETTES et découvrez les informations relatives à la protection de vos données personnelles.';
+        $description = 'Consultez la politique de confidentialitÃ© de MIETTES et dÃ©couvrez les informations relatives Ã  la protection de vos donnÃ©es personnelles.';
     }
     if ($description !== '') {
         echo '<meta name="description" content="' .
@@ -512,3 +512,51 @@ function miettes_seo_meta_description() {
     }
 }
 add_action('wp_head', 'miettes_seo_meta_description', 5);
+
+/* ==========================================================
+   07 â€” SEO : OPEN GRAPH
+   ========================================================== */
+/**
+ * PrÃ©pare les aperÃ§us des liens MIETTES sur les rÃ©seaux sociaux.
+ */
+function miettes_open_graph_tags() {
+    // Pages disposant d'une mÃ©ta-description personnalisÃ©e.
+    $descriptions = array(
+        'accueil' => 'DÃ©couvrez MIETTES, maison parisienne de pain perdu rÃ©inventÃ©. Une expÃ©rience gastronomique singuliÃ¨re entre tradition et audace.',
+        'la-maison' => 'Entrez dans lâ€™univers de MIETTES. Une maison oÃ¹ le pain perdu devient une crÃ©ation gastronomique, entre savoir-faire et libertÃ©.',
+        'contact' => 'Contactez MIETTES, maison de pain perdu Ã  Paris. Une question, une demande ou simplement lâ€™envie de dÃ©couvrir notre univers ?',
+        'politique-de-confidentialite' => 'Consultez la politique de confidentialitÃ© de MIETTES et dÃ©couvrez les informations relatives Ã  la protection de vos donnÃ©es personnelles.'
+    );
+    // Identifie la page consultÃ©e.
+    if (is_front_page()) {
+        $key = 'accueil';
+    } elseif (is_page()) {
+        $key = get_post_field('post_name', get_queried_object_id());
+    } else {
+        return;
+    }
+    if (!isset($descriptions[$key])) {
+        return;
+    }
+    // RÃ©utilise le titre SEO WordPress.
+    $title = wp_get_document_title();
+    // URL de la page, sans paramÃ¨tres de test.
+    $url = is_front_page() ? home_url('/') : get_permalink();
+    // Image commune Ã  toutes les pages.
+    $image = get_template_directory_uri() . '/images/og-miettes.png';
+    echo "\n<!-- MIETTES â€” Open Graph -->\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:site_name" content="MIETTES">' . "\n";
+    echo '<meta property="og:locale" content="fr_FR">' . "\n";
+    echo '<meta property="og:title" content="' .
+        esc_attr($title) . '">' . "\n";
+    echo '<meta property="og:description" content="' .
+        esc_attr($descriptions[$key]) . '">' . "\n";
+    echo '<meta property="og:url" content="' .
+        esc_url($url) . '">' . "\n";
+    echo '<meta property="og:image" content="' .
+        esc_url($image) . '">' . "\n";
+    echo '<meta property="og:image:width" content="1734">' . "\n";
+    echo '<meta property="og:image:height" content="907">' . "\n";
+}
+add_action('wp_head', 'miettes_open_graph_tags', 6);
