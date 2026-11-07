@@ -269,6 +269,23 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
+       A.4 — COLLECTION CINEMATIQUE
+       ------------------------------------------------------ */
+    if (is_front_page()) {
+        $collection_css_path = get_theme_file_path(
+            '/assets/css/collection.css'
+        );
+        if (is_file($collection_css_path)) {
+            wp_enqueue_style(
+                'miettes-collection',
+                get_theme_file_uri('/assets/css/collection.css'),
+                array('miettes-home'),
+                filemtime($collection_css_path)
+            );
+        }
+    }
+
+    /* ------------------------------------------------------
        B — PAGE D'ACCUEIL
        ------------------------------------------------------
 

@@ -1,0 +1,259 @@
+/* ==========================================
+   12 — COLLECTION CINÉMATIQUE
+   ==========================================
+
+   La première carte est grande, à gauche.
+   Les suivantes sont décalées à droite et réduites.
+   Le JavaScript anime chaque carte au scroll.
+*/
+
+.collection {
+    position: relative;
+    width: 100%;
+    margin-top: 120px;
+    padding-inline: 5%;
+}
+
+.collection-sticky {
+    position: sticky;
+    top: var(--collection-sticky-top, 80px);
+    height: var(--collection-sticky-height, auto);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.collection-intro {
+    flex: 0 0 auto;
+    margin-bottom: 24px;
+}
+
+.collection-eyebrow {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--color-greige);
+}
+
+.collection-intro h2 {
+    margin: 0;
+    font-size: clamp(42px, 6vw, 90px);
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 1;
+}
+
+.collection-intro p {
+    margin-top: 14px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+/* La fenêtre réserve une hauteur distincte pour les légendes. */
+.collection-viewport {
+    position: relative;
+    width: 100%;
+    height: var(--collection-viewport-height, 500px);
+    min-height: 0;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.collection-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.collection-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(78%, 900px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform-origin: left center;
+    will-change: transform, opacity;
+}
+
+.collection-image {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    background-color: var(--color-ink);
+}
+
+.collection-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Déplace le cadrage vers la partie droite de l'image. */
+    object-position: center center;
+}
+
+.collection-caption {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    min-height: 62px;
+    padding-top: 18px;
+}
+
+.collection-caption span {
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--color-greige);
+}
+
+.collection-caption h3 {
+    margin: 0;
+    font-size: clamp(18px, 2.3vw, 30px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-align: right;
+}
+
+/* ==========================================
+   13 — PETITS ÉCRANS ET MOUVEMENT RÉDUIT
+   ========================================== */
+
+/* Responsive spécifique à la Collection. */
+@media (max-width: 600px) {
+
+    .collection {
+        padding-inline: 6%;
+        margin-top: 80px;
+    }
+
+    .collection-intro h2 {
+        font-size: clamp(38px, 10vw, 64px);
+    }
+}
+
+/* En mode réduit et sur mobile, on revient à un rail natif. */
+@media (max-width: 600px), (prefers-reduced-motion: reduce) {
+    .collection { height: auto !important; }
+    .collection-sticky {
+        position: static;
+        height: auto;
+    }
+    .collection-viewport {
+        height: auto;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+    }
+    .collection-track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+        height: auto;
+    }
+    .collection-item {
+        position: relative;
+        left: auto; /* Annule le centrage sur mobile. */
+        flex: 0 0 82vw;
+        width: 82vw;
+        max-width: 520px;
+        height: auto;
+        transform: none !important;
+        opacity: 1 !important;
+        will-change: auto;
+        scroll-snap-align: start;
+    }
+    .collection-image {
+        flex: none;
+        aspect-ratio: 3 / 2;
+    }
+    .collection-caption {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .collection-caption h3 { text-align: left; }
+}
+
+/* Sur un écran très bas, ne pas forcer un sticky illisible. */
+@media (min-width: 601px) and (max-height: 559px) {
+    .collection { height: auto !important; }
+    .collection-sticky { position: static; height: auto; }
+    .collection-viewport { height: auto; overflow-x: auto; }
+    .collection-track { display: flex; gap: 16px; width: max-content; height: auto; }
+    .collection-item { position: relative; flex: 0 0 70vw; width: 70vw; height: auto; transform: none !important; opacity: 1 !important; }
+    .collection-image { flex: none; aspect-ratio: 3 / 2; }
+}
+
+/* ==========================================
+   MIETTES — ESPACE DE RESPIRATION COLLECTION
+   ==========================================
+
+   On réserve de l'espace sous les légendes
+   pour éviter qu'elles soient coupées par
+   le bas de la fenêtre.
+*/
+
+@media (min-width: 601px) {
+
+    .collection-sticky {
+        /* Centre le contenu sans le coller au bas. */
+        justify-content: center;
+    }
+
+    .collection-viewport {
+        /*
+         * On réduit légèrement la hauteur
+         * disponible, pas la largeur des images.
+         */
+        height: var(--collection-viewport-height, 500px);
+    }
+
+    .collection-caption {
+        /*
+         * La légende reste sous la photographie
+         * avec une hauteur suffisante.
+         */
+        min-height: 68px;
+        padding-top: 16px;
+    }
+}
+
+
+/* ==========================================
+   MIETTES — SECTION 03 : SIGNATURE
+   ==========================================
+
+   La signature occupe toute la largeur
+   et conserve les proportions de l'image.
+*/
+
+.brand-signature {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.brand-signature-image {
+    display: block;
+    width: 100%;
+    height: 420px;
+
+    /* Remplit la zone en recadrant les marges du logo. */
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 600px) {
+    .brand-signature-image {
+        height: 240px;
+    }
+}
+
+
