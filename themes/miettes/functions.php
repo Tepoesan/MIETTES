@@ -302,6 +302,25 @@ function miettes_enqueue_assets() {
         }
     }
     /* ------------------------------------------------------
+       A.6 — CSS LA MAISON
+       ------------------------------------------------------ */
+    if (
+        is_page('la-maison') ||
+        is_page_template('page-la-maison.php')
+    ) {
+        $maison_css_path = get_theme_file_path(
+            '/assets/css/maison.css'
+        );
+        if (is_file($maison_css_path)) {
+            wp_enqueue_style(
+                'miettes-maison',
+                get_theme_file_uri('/assets/css/maison.css'),
+                array('miettes-style'),
+                filemtime($maison_css_path)
+            );
+        }
+    }
+    /* ------------------------------------------------------
        B — PAGE D'ACCUEIL
        ------------------------------------------------------
 
