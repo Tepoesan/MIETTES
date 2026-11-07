@@ -286,6 +286,22 @@ function miettes_enqueue_assets() {
     }
 
     /* ------------------------------------------------------
+       A.5 — MANIFESTE
+       ------------------------------------------------------ */
+    if (is_front_page()) {
+        $manifesto_css_path = get_theme_file_path(
+            '/assets/css/manifesto.css'
+        );
+        if (is_file($manifesto_css_path)) {
+            wp_enqueue_style(
+                'miettes-manifesto',
+                get_theme_file_uri('/assets/css/manifesto.css'),
+                array('miettes-collection'),
+                filemtime($manifesto_css_path)
+            );
+        }
+    }
+    /* ------------------------------------------------------
        B — PAGE D'ACCUEIL
        ------------------------------------------------------
 
