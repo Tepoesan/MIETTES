@@ -372,6 +372,25 @@ function miettes_enqueue_assets() {
 
 
     /* ------------------------------------------------------
+       CSS CONTACT — CHARGEMENT CONDITIONNEL
+       ------------------------------------------------------ */
+    if (
+        is_page('contact') ||
+        is_page_template('page-contact.php')
+    ) {
+        $contact_css_path = get_theme_file_path(
+            '/assets/css/contact.css'
+        );
+        if (is_file($contact_css_path)) {
+            wp_enqueue_style(
+                'miettes-contact-css',
+                get_theme_file_uri('/assets/css/contact.css'),
+                array('miettes-style'),
+                filemtime($contact_css_path)
+            );
+        }
+    }
+    /* ------------------------------------------------------
        D — PAGE CONTACT
        ------------------------------------------------------
 

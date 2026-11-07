@@ -1,0 +1,878 @@
+/* ==========================================================
+   16 — MIETTES / CONTACT — LOGO SLOT MACHINE
+   ==========================================================
+
+   Direction artistique :
+   - fond anthracite ;
+   - typographie monumentale ivoire ;
+   - reflet inversé sous le logo ;
+   - animation mécanique de 2 secondes.
+
+   Tous les styles sont limités à .contact-slot
+   pour ne pas modifier les autres pages.
+*/
+
+/* ----------------------------------------------------------
+   01 — CONTENEUR PRINCIPAL
+   ---------------------------------------------------------- */
+
+.contact-slot {
+    /* Hauteur commune à chaque ligne du rouleau. */
+    --slot-line: clamp(50px, 13vw, 190px);
+
+    width: 100%;
+    padding: 70px 5% 45px;
+
+    overflow: hidden;
+
+    background-color: var(--color-ink);
+    color: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   02 — FENÊTRE DU ROULEAU
+   ---------------------------------------------------------- */
+
+.contact-slot__window {
+    width: 100%;
+    height: var(--slot-line);
+
+    /* Cache les inscriptions situées hors de la fenêtre. */
+    overflow: hidden;
+}
+
+/* Les quatre MIETTES sont empilés verticalement. */
+.contact-slot__reel {
+    display: flex;
+    flex-direction: column;
+
+    /* Affiche initialement la dernière inscription. */
+    transform: translateY(-75%);
+}
+
+/* Apparence identique pour chaque inscription. */
+.contact-slot__reel span {
+    display: flex;
+    align-items: center;
+
+    flex: 0 0 var(--slot-line);
+    height: var(--slot-line);
+
+    font-family: var(--font-body);
+    font-size: clamp(50px, 13vw, 190px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.085em;
+    white-space: nowrap;
+}
+
+/* ----------------------------------------------------------
+   03 — REFLET DU LOGO
+   ---------------------------------------------------------- */
+
+.contact-slot__reflection {
+    font-family: var(--font-body);
+    font-size: clamp(50px, 13vw, 190px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.085em;
+    white-space: nowrap;
+
+    /* Inverse verticalement l'inscription. */
+    transform: scaleY(-1);
+
+    /* Reflet discret, moins lumineux que le logo. */
+    opacity: 0.22;
+
+    /* Dégradé pour estomper le reflet vers le bas. */
+    -webkit-mask-image: linear-gradient(
+        to top,
+        transparent,
+        black
+    );
+
+    mask-image: linear-gradient(
+        to top,
+        transparent,
+        black
+    );
+}
+
+/* ----------------------------------------------------------
+   04 — RESPONSIVE MOBILE
+   ---------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .contact-slot {
+        --slot-line: clamp(36px, 12vw, 70px);
+        padding: 55px 6% 35px;
+    }
+
+    .contact-slot__reel span,
+    .contact-slot__reflection {
+        font-size: clamp(36px, 12vw, 70px);
+    }
+}
+
+
+/* ==========================================================
+   MIETTES — AJUSTEMENTS DU LOGO CONTACT
+   ========================================================== */
+
+/*
+ * Le logo occupe presque toute la largeur disponible.
+ * La taille reste proportionnelle à celle de l'écran.
+ */
+.contact-slot {
+    --slot-line: clamp(50px, 15.5vw, 280px);
+}
+
+/*
+ * Même typographie pour le rouleau et son reflet.
+ * On augmente la taille pour un effet monumental.
+ */
+.contact-slot__reel span,
+.contact-slot__reflection {
+    font-size: clamp(50px, 15.5vw, 280px);
+    letter-spacing: -0.085em;
+}
+
+/*
+ * Reflet légèrement plus lumineux.
+ * Le dégradé conserve son effet de disparition.
+ */
+.contact-slot__reflection {
+    opacity: 0.32;
+}
+
+/* Sur mobile, on conserve des proportions adaptées. */
+@media (max-width: 600px) {
+    .contact-slot {
+        --slot-line: clamp(36px, 12vw, 70px);
+    }
+
+    .contact-slot__reel span,
+    .contact-slot__reflection {
+        font-size: clamp(36px, 12vw, 70px);
+    }
+}
+
+
+/* ==========================================================
+   17 — CONTACT : ANIMATION SLOT MACHINE
+   ========================================================== */
+
+/* ==========================================================
+   MIETTES — ANIMATION CONTACT : VERSION CINÉMATIQUE
+   ==========================================================
+
+   Défilement lent du logo :
+   - Durée de 3,4 secondes.
+   - Décélération progressive.
+   - Arrêt sans rebond prononcé.
+*/
+
+.contact-slot.is-animating .contact-slot__reel {
+    animation: miettes-slot-roll 3.4s
+        cubic-bezier(0.45, 0, 0.20, 1) both;
+}
+
+/*
+   Le logo descend progressivement jusqu'à
+   sa position finale, sans oscillation brutale.
+*/
+
+@keyframes miettes-slot-roll {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(
+            calc(var(--slot-line) * -3)
+        );
+    }
+}
+
+
+
+/* ----------------------------------------------------------
+   REFLET — APPARITION DOUCE APRÈS LE DÉFILEMENT
+   ----------------------------------------------------------
+
+   Le reflet commence à apparaître vers la fin
+   du mouvement et se révèle progressivement.
+*/
+
+.contact-slot.is-animating .contact-slot__reflection {
+    animation: miettes-reflection-in 1.2s 2.8s both;
+}
+
+@keyframes miettes-reflection-in {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.32;
+    }
+}
+
+
+/* ==========================================================
+   ACCESSIBILITÉ : MOUVEMENT RÉDUIT
+   ==========================================================
+
+   Désactive les animations pour les visiteurs
+   qui préfèrent limiter les mouvements.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+
+    .contact-slot.is-animating .contact-slot__reel {
+        animation: none;
+        transform: translateY(
+            calc(var(--slot-line) * -3)
+        );
+    }
+
+    .contact-slot.is-animating .contact-slot__reflection {
+        animation: none;
+        opacity: 0.32;
+    }
+}
+
+
+/* ==========================================================
+   18 — CONTACT : COMPOSITION ÉDITORIALE
+   ==========================================================
+
+   Direction artistique :
+   - Minimalisme brutaliste.
+   - Fond ivoire.
+   - Typographie noire.
+   - Grille asymétrique à trois colonnes.
+   - Filets fins et espaces généreux.
+
+   Cette section est indépendante de l'animation
+   du logo située au-dessus.
+*/
+
+
+/* ----------------------------------------------------------
+   18.1 — CONTENEUR PRINCIPAL
+   ---------------------------------------------------------- */
+
+.contact-editorial {
+    background: #f4f2ef;
+    color: #171717;
+
+    padding: clamp(40px, 5vw, 80px)
+             clamp(24px, 5vw, 90px);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ----------------------------------------------------------
+   18.2 — EN-TÊTE : CONTACT / ©27
+   ---------------------------------------------------------- */
+
+.contact-editorial__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 24px;
+
+    padding-bottom: 34px;
+    border-bottom: 1px solid #171717;
+}
+
+.contact-editorial__heading-main {
+    min-width: 0;
+}
+
+.contact-editorial__eyebrow {
+    display: block;
+
+    margin-bottom: 24px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.contact-editorial__title {
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(72px, 12vw, 190px);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.075em;
+    text-transform: uppercase;
+}
+
+.contact-editorial__edition {
+    flex-shrink: 0;
+
+    font-size: clamp(52px, 9vw, 145px);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.08em;
+}
+
+
+/* ----------------------------------------------------------
+   18.3 — GRILLE PRINCIPALE
+   ---------------------------------------------------------- */
+
+.contact-editorial__body {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1.25fr)
+        minmax(0, 1.1fr);
+
+    gap: clamp(30px, 4vw, 70px);
+
+    align-items: start;
+
+    padding: clamp(50px, 6vw, 90px) 0;
+}
+
+
+/* ----------------------------------------------------------
+   18.4 — COLONNE GAUCHE : COORDONNÉES
+   ---------------------------------------------------------- */
+
+.contact-editorial__details {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.contact-editorial__detail h2 {
+    margin: 0 0 10px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+}
+
+.contact-editorial__detail a {
+    color: inherit;
+
+    font-size: clamp(15px, 1.5vw, 22px);
+    font-weight: 500;
+    line-height: 1.4;
+
+    text-decoration: none;
+    overflow-wrap: anywhere;
+
+    transition: opacity 0.25s ease;
+}
+
+.contact-editorial__detail a:hover {
+    opacity: 0.55;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+
+/* ----------------------------------------------------------
+   18.5 — COLONNE CENTRALE : PRÉSENTATION
+   ---------------------------------------------------------- */
+
+.contact-editorial__story {
+    min-width: 0;
+
+    padding-left: clamp(20px, 3vw, 45px);
+    border-left: 1px solid #777;
+}
+
+.contact-editorial__story-title {
+    margin: 0 0 28px;
+
+    font-size: clamp(14px, 1.4vw, 20px);
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.10em;
+}
+
+.contact-editorial__story-text {
+    max-width: 360px;
+
+    margin: 0;
+
+    font-size: clamp(15px, 1.3vw, 18px);
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.contact-editorial__address {
+    margin-top: clamp(50px, 6vw, 90px);
+}
+
+.contact-editorial__dash {
+    display: block;
+
+    width: 38px;
+    height: 1px;
+
+    margin-bottom: 24px;
+
+    background: #171717;
+}
+
+.contact-editorial__address h3,
+.contact-editorial__address p {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.8;
+    letter-spacing: 0.13em;
+}
+
+
+/* ----------------------------------------------------------
+   18.6 — COLONNE DROITE : PHOTOGRAPHIE
+   ---------------------------------------------------------- */
+
+.contact-editorial__visual {
+    margin: 0;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+    background: #292929;
+}
+
+/*
+ * MIETTES — CONTACT : CONTENEUR WEBP
+ *
+ * La balise picture occupe tout le cadre carré.
+ * L'image conserve son cadrage et son filtre.
+ *
+ * Cette règle accompagne le nouveau HTML
+ * sans modifier la composition éditoriale.
+ */
+.contact-editorial__visual picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.contact-editorial__visual img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    filter: grayscale(100%);
+}
+
+
+/* ----------------------------------------------------------
+   18.7 — SIGNATURE ÉDITORIALE
+   ---------------------------------------------------------- */
+
+.contact-editorial__signature {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 16px 30px;
+
+    padding-top: 25px;
+    border-top: 1px solid #171717;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+}
+
+
+/* ==========================================================
+   19 — CONTACT : RESPONSIVE
+   ========================================================== */
+
+/* Tablettes */
+@media (max-width: 1000px) {
+
+    .contact-editorial__body {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+
+    .contact-editorial__visual {
+        grid-column: 2;
+    }
+
+    .contact-editorial__story {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .contact-editorial__details {
+        grid-column: 1;
+        grid-row: 1 / 3;
+    }
+}
+
+
+/* Mobiles */
+@media (max-width: 650px) {
+
+    .contact-editorial {
+        padding: 55px 22px;
+    }
+
+    .contact-editorial__heading {
+        align-items: flex-end;
+        gap: 12px;
+        padding-bottom: 25px;
+    }
+
+    .contact-editorial__eyebrow {
+        margin-bottom: 20px;
+        font-size: 10px;
+    }
+
+    .contact-editorial__title {
+        font-size: clamp(48px, 12vw, 78px);
+        letter-spacing: -0.075em;
+    }
+
+    .contact-editorial__edition {
+        font-size: clamp(36px, 10vw, 60px);
+    }
+
+    .contact-editorial__body {
+        grid-template-columns: 1fr;
+        gap: 55px;
+        padding: 55px 0;
+    }
+
+    .contact-editorial__details,
+    .contact-editorial__story,
+    .contact-editorial__visual {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .contact-editorial__details {
+        gap: 35px;
+    }
+
+    .contact-editorial__story {
+        padding-left: 22px;
+    }
+
+    .contact-editorial__visual {
+        max-width: 440px;
+    }
+
+    .contact-editorial__signature {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+
+
+/* ==========================================================
+   20 — CONTACT : HERO CINÉMATOGRAPHIQUE
+   ==========================================================
+
+   Direction artistique MIETTES :
+   - Fond noir avec poussière sur les côtés.
+   - Centre sombre pour mettre en valeur le logo.
+   - Logo monumental blanc.
+   - Reflet inversé, flou et progressif.
+   - Composition centrée.
+
+   L'animation verticale de 3,4 secondes
+   reste gérée par la section 17.
+*/
+
+
+
+/* ----------------------------------------------------------
+   20.1 — FOND ET COMPOSITION DU HERO
+   ---------------------------------------------------------- */
+
+.miettes-contact .contact-slot {
+
+    /* Hauteur commune du logo et de son reflet. */
+    --slot-line: clamp(64px, 13vw, 230px);
+
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* Hero compact, fidèle à la maquette. */
+    min-height: clamp(380px, 52vh, 560px);
+
+    padding: 65px 5vw 75px;
+
+    /* Empêche les éléments animés de déborder. */
+    overflow: hidden;
+
+
+/*
+ * FOND PHOTOGRAPHIQUE — MIETTES CONTACT
+ *
+ * L'image utilise directement le format WebP.
+ * Aucun PNG de secours n'est nécessaire.
+ *
+ * Le cadrage et les dimensions d'affichage
+ * restent identiques à la version précédente.
+ */
+
+background-color: #101010;
+
+/* Photographie WebP optimisée. */
+background-image: url("../../images/contact-hero-bg.webp");
+
+/* Cadrage conservé. */
+background-position: center center;
+background-size: cover;
+background-repeat: no-repeat;
+
+
+    /* Couleur ivoire pour le logo et les textes. */
+    color: #f4f2ef;
+}
+
+
+
+/* ----------------------------------------------------------
+   20.2 — SIGNATURE AU-DESSUS DU LOGO
+   ---------------------------------------------------------- */
+
+.miettes-contact .contact-slot__eyebrow {
+
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 24px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(10px, 0.9vw, 13px);
+    font-weight: 500;
+
+    letter-spacing: 0.38em;
+    line-height: 1.6;
+    text-align: center;
+}
+
+
+/* ----------------------------------------------------------
+   20.3 — LOGO ANIMÉ
+   ----------------------------------------------------------
+
+   Les quatre inscriptions MIETTES restent
+   empilées verticalement.
+
+   On conserve les classes nécessaires
+   au JavaScript contact-slot.js.
+*/
+
+.miettes-contact .contact-slot__window {
+
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    height: var(--slot-line);
+
+    overflow: hidden;
+}
+
+.miettes-contact .contact-slot__reel {
+
+    display: flex;
+    flex-direction: column;
+
+    transform: translateY(
+        calc(var(--slot-line) * -3)
+    );
+}
+
+.miettes-contact .contact-slot__reel span {
+
+    display: flex;
+    flex: 0 0 var(--slot-line);
+
+    align-items: center;
+    justify-content: center;
+
+    height: var(--slot-line);
+
+    color: #f8f7f5;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--slot-line);
+    font-weight: 700;
+    line-height: 1;
+
+    letter-spacing: -0.075em;
+    white-space: nowrap;
+}
+
+
+/* ----------------------------------------------------------
+   20.4 — REFLET MIROIR
+   ----------------------------------------------------------
+
+   Le reflet reprend la typographie du logo.
+
+   Il est :
+   - inversé verticalement ;
+   - légèrement flou ;
+   - plus visible près du logo ;
+   - progressivement transparent vers le bas.
+
+   Son apparition reste animée par la section 17.
+*/
+
+.miettes-contact .contact-slot__reflection {
+
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--slot-line);
+
+    /* Rapproche le reflet du logo principal. */
+    margin-top: -8px;
+
+    color: #f8f7f5;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--slot-line);
+    font-weight: 700;
+    line-height: 1;
+
+    letter-spacing: -0.075em;
+    white-space: nowrap;
+
+    /* Retourne les lettres verticalement. */
+    transform: scaleY(-1);
+    transform-origin: center center;
+
+    /* Flou léger de surface réfléchissante. */
+    filter: blur(2.5px);
+
+    /*
+       Opacité finale.
+       L'animation miettes-reflection-in
+       prend le relais lors du chargement.
+    */
+    opacity: 0.32;
+
+    /*
+       Dégradé inversé avant transformation :
+       après scaleY(-1), la lumière est
+       plus forte près du logo.
+    */
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.90) 0%,
+        rgba(0, 0, 0, 0.40) 42%,
+        transparent 95%
+    );
+
+    mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.90) 0%,
+        rgba(0, 0, 0, 0.40) 42%,
+        transparent 95%
+    );
+}
+
+
+/* ----------------------------------------------------------
+   20.5 — FILET DÉCORATIF
+   ---------------------------------------------------------- */
+
+.miettes-contact .contact-slot::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 30px;
+    left: 50%;
+
+    width: 40px;
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    transform: translateX(-50%);
+}
+
+
+/* ----------------------------------------------------------
+   20.6 — RESPONSIVE MOBILE
+   ---------------------------------------------------------- */
+
+@media (max-width: 650px) {
+
+    .miettes-contact .contact-slot {
+
+        --slot-line: clamp(42px, 13vw, 85px);
+
+        min-height: 350px;
+        padding: 60px 16px 65px;
+
+        /*
+           Sur mobile, on conserve la zone
+           centrale de la photographie.
+        */
+        background-position: center center;
+    }
+
+    .miettes-contact .contact-slot__eyebrow {
+
+        margin-bottom: 20px;
+
+        font-size: 9px;
+        letter-spacing: 0.2em;
+    }
+
+    .miettes-contact .contact-slot__reflection {
+
+        margin-top: -4px;
+        filter: blur(2px);
+    }
+
+    .miettes-contact .contact-slot::after {
+
+        bottom: 22px;
+        width: 32px;
+    }
+}
