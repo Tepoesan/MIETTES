@@ -486,3 +486,29 @@ function miettes_seo_document_title($title) {
 }
 
 add_filter('document_title_parts', 'miettes_seo_document_title');
+
+/* ==========================================================
+   06 — SEO : MÉTA-DESCRIPTIONS
+   ========================================================== */
+/**
+ * Ajoute une méta-description spécifique aux pages MIETTES.
+ * Le contenu est échappé pour sécuriser le HTML.
+ */
+function miettes_seo_meta_description() {
+    $description = '';
+    if (is_front_page()) {
+        $description = 'Découvrez MIETTES, maison parisienne de pain perdu réinventé. Une expérience gastronomique singulière entre tradition et audace.';
+    } elseif (is_page('la-maison')) {
+        $description = 'Entrez dans l’univers de MIETTES. Une maison où le pain perdu devient une création gastronomique, entre savoir-faire et liberté.';
+    } elseif (is_page('contact')) {
+        $description = 'Contactez MIETTES, maison de pain perdu à Paris. Une question, une demande ou simplement l’envie de découvrir notre univers ?';
+    } elseif (is_page('politique-de-confidentialite')) {
+        $description = 'Consultez la politique de confidentialité de MIETTES et découvrez les informations relatives à la protection de vos données personnelles.';
+    }
+    if ($description !== '') {
+        echo '<meta name="description" content="' .
+            esc_attr($description) .
+            '">' . "\n";
+    }
+}
+add_action('wp_head', 'miettes_seo_meta_description', 5);
