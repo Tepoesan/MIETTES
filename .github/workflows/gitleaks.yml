@@ -1,0 +1,33 @@
+
+# MIETTES Ã¢â‚¬â€ Analyse automatique des secrets
+name: Security - Gitleaks
+
+# Lancer l'analyse sur les push, pull requests
+# et manuellement depuis GitHub.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+# Permissions minimales pour lire le depot.
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    name: Scan secrets
+    runs-on: ubuntu-latest
+
+    steps:
+      # Recuperer l'historique Git.
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Scanner les secrets.
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"
